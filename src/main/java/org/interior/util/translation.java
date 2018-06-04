@@ -7,17 +7,28 @@ import java.time.ZoneId;
 public class translation {
 	
 	
-	//epoch시간을 월/일 시 분 초로 리턴함
+	//epoch시간을 시 분 초로 리턴함
 	public static String epochCalculator(Long time)
 	{
 		Instant now = Instant.ofEpochMilli(time);
 		OffsetDateTime gameTime = OffsetDateTime.ofInstant(now, ZoneId.systemDefault()); 
 		
-		
-		String printTime = gameTime.getMonthValue() + "월 " + gameTime.getDayOfMonth() + "일 "
-				 + gameTime.getHour() + ":" + gameTime.getMinute();
+		String printTime = gameTime.getHour() + "시 " + mm(gameTime.getMinute()) + "분 " + mm(gameTime.getSecond()) + "초";
 		
 		return printTime;
+	}
+	
+	//00처리
+	private static String mm(int minute) {
+		
+		if(minute < 10)
+		{
+			return "0" + minute; 
+		}
+		else
+		{
+			return minute + "";
+		}
 	}
 	
 	//게임 모드를 한글로 바꿈

@@ -11,13 +11,18 @@
     <script type="text/javascript">
 	    $(document).ready(function(){
 	    	$('#header').load("/header.html");
+	    	
+	    	$.ajax({
+	    		url: "getIconCode",
+				data: {name: name},
+	    		type: "get",
+	    		dataType: "text",
+	    		success: function(result){
+	    			$('#icon').attr('src', 'http://opgg-static.akamaized.net/images/profile_icons/profileIcon' + result + '.jpg')
+	    		}
+	    	});
 	    });
-
-	  /*   var number = $('#getIcon').val();
-	   	alert(number);
-	    var getIcon = "<img src='http://opgg-static.akamaized.net/images/profile_icons/profileIcon" + number + ".jpg' alt='아이콘'>";
 		
-	    $('#userIcon').html(getIcon); */
 
     </script>
 
@@ -25,24 +30,29 @@
 	   
 </head>
 <body>
+
     <div id="header">
   		
 	</div>
 	
 <div class="row">
   <div class="col-xs-4">
-  	소환사 : {{ Summoner }}<br>
-  	레벨 : {{ Level }}<br>
+ 	{{#summoner}}
+ 		소환사 : {{ name }}<br>
+  		레벨 : {{ summonerLevel }}<br>
+  		{{ profileIconId }}
+	{{/summoner}}
+
   	
   	<div id="userIcon">
-  		{{ Icon }}
+  		<img id="icon" src="">
   	</div>
 	  
   </div>
  
   <div class="col-xs-8">
-{{gameInfo_Time}}<br>
-{{gameInfo_Mode}} 
+	{{gameInfo_Time}}<br>
+	{{gameInfo_Mode}} 
   </div>
   
   

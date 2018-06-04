@@ -17,6 +17,7 @@ public class MybaronApplication {
 
 	public static void main(String[] args) {
 		SpringApplication.run(MybaronApplication.class, args);
+		
 	}
 	
 	@Bean
