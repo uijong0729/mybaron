@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+
+<title>착한 바론</title>
+    <script src="/webjars/jquery/3.2.1/jquery.min.js"></script>    
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <script src="/webjars/bootstrap/4.1.0/js/bootstrap.min.js"></script>
+    
+    <script type="text/javascript">
+	    $(document).ready(function(){
+	    	$('#header').load("/header.html");
+	    });
+
+	  /*   var number = $('#getIcon').val();
+	   	alert(number);
+	    var getIcon = "<img src='http://opgg-static.akamaized.net/images/profile_icons/profileIcon" + number + ".jpg' alt='아이콘'>";
+		
+	    $('#userIcon').html(getIcon); */
+
+    </script>
+
+	    
+	   
+</head>
+<body>
+    <div id="header">
+  		
+	</div>
+	
+<div class="row">
+  <div class="col-xs-4">
+  	소환사 : {{ Summoner }}<br>
+  	레벨 : {{ Level }}<br>
+  	
+  	<div id="userIcon">
+  		{{ Icon }}
+  	</div>
+	  
+  </div>
+ 
+  <div class="col-xs-8">
+{{gameInfo_Time}}<br>
+{{gameInfo_Mode}} 
+  </div>
+  
+  
+</div>
+
+
+
+
+
+
+</body>
+</html>
