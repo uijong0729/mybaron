@@ -51,7 +51,7 @@ public class SummonerController {
 		}
 		catch(Exception e)
 		{
-			return "noresult";
+			return "userprofile";
 		}
 					
 		return "userprofile";
