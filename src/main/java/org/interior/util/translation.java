@@ -4,6 +4,8 @@ import java.time.Instant;
 import java.time.OffsetDateTime;
 import java.time.ZoneId;
 
+import net.rithms.riot.api.RiotApiException;
+
 public class translation {
 	
 	
@@ -45,6 +47,53 @@ public class translation {
 	}
 	
 	
+	//게임 아이콘
+	public static String getIconCode(int iconCode) throws RiotApiException{
+		String iconTag = "<img width='30%' src='http://opgg-static.akamaized.net/images/profile_icons/profileIcon" 
+					+ iconCode 
+					+ ".jpg'>";
+		
+		return iconTag;
+	}
+	
+	//스펠 아이콘
+	/*
+	 */
+	public static String getSpellImg(int iconCode) throws RiotApiException{
+		
+		String spellName = "";
+		
+		switch(iconCode)
+		{
+			case 1: spellName = "SummonerBoost";	break;
+			case 4: spellName = "SummonerFlash";	break;
+			case 3: spellName = "SummonerExhaust";	break;
+			case 6: spellName = "SummonerHaste";	break;
+			case 7: spellName = "SummonerHeal";		break;
+			case 11: spellName = "SummonerSmite";	break;
+			case 12: spellName = "SummonerTeleport";	break;
+			case 13: spellName = "SummonerMana";	break;
+			case 14: spellName = "SummonerDot";	break;
+			case 32: spellName = "SummonerSnowball";	break;
+			case 21: spellName = "SummonerBarrier";	break;
+			default: 
+		}
+		String iconTag = "<img width='50%' src='summonerSpell/" 
+					+ spellName
+					+ ".png'>";
+		
+		return iconTag;
+	}
+	
+	//챔피언 아이콘
+public static String getChampName(String iconCode) throws RiotApiException{
+		
+		String iconTag = "<img width='50%' src='http://ddragon.leagueoflegends.com/cdn/8.10.1/img/champion/" 
+					+ iconCode
+					+ ".png'>";
+	
+		return iconTag;
+	}
 	
 	
 }

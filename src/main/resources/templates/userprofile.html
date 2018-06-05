@@ -9,20 +9,17 @@
     <script src="/webjars/bootstrap/4.1.0/js/bootstrap.min.js"></script>
     
     <script type="text/javascript">
+    
+    
 	    $(document).ready(function(){
 	    	$('#header').load("/header.html");
 	    	
-	    	$.ajax({
-	    		url: "getIconCode",
-				data: {name: name},
-	    		type: "get",
-	    		dataType: "text",
-	    		success: function(result){
-	    			$('#icon').attr('src', 'http://opgg-static.akamaized.net/images/profile_icons/profileIcon' + result + '.jpg')
-	    		}
-	    	});
 	    });
 		
+	    
+	    
+
+
 
     </script>
 
@@ -35,33 +32,89 @@
   		
 	</div>
 	
-<div class="row">
-  <div class="col-xs-4">
- 	{{#summoner}}
- 		소환사 : {{ name }}<br>
-  		레벨 : {{ summonerLevel }}<br>
-  		{{ profileIconId }}
-	{{/summoner}}
-
-  	
-  	<div id="userIcon">
-  		<img id="icon" src="">
-  	</div>
+	
+<div class="row" style="text-align: center;">
+  	<div class="col-xs-2">
+	 	{{#summoner}}
+	 		<!-- 아이콘 -->
+		 	{{ #profileIconId }}
+	  			<span style="display: none;" id="iconCode">{{.}}</span>	
+	  		{{ /profileIconId }}
+	 		<ul style="list-style: none;">
+	 			<li>{{ #name }} {{.}} {{ /name }}</li>
+	 			<li>{{ #summonerLevel }}	레벨 : {{.}}	{{ /summonerLevel }}</li>
+		{{/summoner}}
+  				{{#iconImg}}
+  				<li>{{{ iconImg }}}</li>
+				{{/iconImg}}
+			</ul>
+	</div>
+		<div class="col-xs-3">	
+		{{ #gameInfo_Time }}
+				{{.}}
+		{{ /gameInfo_Time }}
+		<br>
+	
+		{{ #gameInfo_Mode }}
+				{{.}}
+		{{ /gameInfo_Mode }}
 	  
-  </div>
- 
-  <div class="col-xs-8">
-	{{gameInfo_Time}}<br>
-	{{gameInfo_Mode}} 
-  </div>
+  		</div>
+ </div>
   
   
-</div>
+<div class="container">
+		<hr>
+			<div class="row">
+			    <div class="col-xs-6 table-responsive">
+					<table style="display: inline-block;" class="table table-hover">
+							<tr>
+								{{ #gameInfo_Team1 }}
+								<td>{{summonerName}}</td>
+								{{ /gameInfo_Team1 }}
+							</tr>
+							
+							<tr>
+							<!-- {{ #gameInfo_Champ1 }}
+								<td>{{{.}}}</td>
+							{{ /gameInfo_Champ1 }}	 -->
+							</tr>
+							
+							<tr>
+								{{ #gameInfo_Spell1 }}
+								<td>{{{ spell_1 }}} {{{ spell_2 }}}</td>
+								{{ /gameInfo_Spell1 }}
+							</tr>
+					</table>
+				</div>
+				
+				<div class="col-xs-6 table-responsive">
+					<table style="display: inline-block;" class="table table-hover">
+							<tr>
+								{{ #gameInfo_Team2 }}
+								<td>{{summonerName}}</td>
+								{{ /gameInfo_Team2 }}
+							</tr>
+							
+							<tr>
+						<!-- 		{{ #gameInfo_Champ1 }}
+									<td>{{{.}}}</td>
+								{{ /gameInfo_Champ1 }}	 -->
+							</tr>
+							
+							<tr>
+								{{ #gameInfo_Spell2 }}
+								<td>{{{ spell_1 }}} {{{ spell_2 }}}</td>
+								{{ /gameInfo_Spell2 }}
+							</tr>
+					</table>
+				</div>
+			
+			
+			
+		 </div><!-- 경기현황 -->
+	</div> <!-- container -->
 
-
-
-
-
-
+<br><br><br><br><br><br><br><br><br><br><br><br>
 </body>
 </html>
