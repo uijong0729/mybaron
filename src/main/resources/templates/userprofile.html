@@ -10,11 +10,36 @@
     
     <script type="text/javascript">
     
-    
 	    $(document).ready(function(){
 	    	$('#header').load("/header.html");
+	    	$.ajaxSettings.traditional = true;
 	    	
-	    });
+	    	var iconCode = document.getElementsByName('champIcon');
+	    	var arr = new Array();
+
+	    	$.each(iconCode, function(index, value){
+	    		arr[index] = value.textContent;
+	    		//array.push(value.textContent);
+	    	});
+	    	
+	    	
+		    $.ajax({
+		    	url: "getIcon",
+		    	type: "get",
+		    	data: {"arr": arr},
+		    	dataType: "json",
+		    	success: function(result){
+		    		$.getJSON('json/champion.json', function(jsonData) {
+			   	      	$.each(jsonData.data, function(index, value) {
+				    		  if(value.key == 266)
+				    		  {
+				    			alert(value.name);  
+				    		  }
+				     	 });
+			   	    });
+		    	}
+		    }); 
+	 	 });
 		
 	    
 	    
@@ -76,8 +101,8 @@
 							
 							<tr>
 							 {{ #gameInfo_Champ1 }}
-								<td>{{{.}}}</td>
-							{{ /gameInfo_Champ1 }}	
+								<td name="champIcon">{{{.}}}</td>
+							{{ /gameInfo_Champ1 }} 	
 							</tr>
 							
 							<tr>
@@ -97,9 +122,9 @@
 							</tr>
 							
 							<tr>
-						 		{{ #gameInfo_Champ2 }}
-									<td>{{{.}}}</td>
-								{{ /gameInfo_Champ2 }}	 
+						 		 {{ #gameInfo_Champ2 }}
+									<td name="champIcon">{{{.}}}</td>
+								{{ /gameInfo_Champ2 }}	  
 							</tr>
 							
 							<tr>

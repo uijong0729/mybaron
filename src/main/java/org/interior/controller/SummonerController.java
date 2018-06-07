@@ -6,7 +6,6 @@ import java.util.List;
 import java.util.Map;
 
 import org.interior.util.InstanceData;
-import org.interior.util.JsonData;
 import org.interior.util.translation;
 import org.interior.vo.SummonerSpell;
 import org.springframework.stereotype.Controller;
@@ -42,7 +41,6 @@ public class SummonerController {
 	@GetMapping("/userProfile")
 	public String userProfile(Model model, String user) throws RiotApiException {
 		
-	
 		//소환사
 		try 
 		{
@@ -65,24 +63,24 @@ public class SummonerController {
 				List<CurrentGameParticipant> team2 = new ArrayList<CurrentGameParticipant>();
 				List<SummonerSpell> spellIcon1 = new ArrayList<SummonerSpell>();
 				List<SummonerSpell> spellIcon2 = new ArrayList<SummonerSpell>();
-				List<String> champIcon1 = new ArrayList<String>();
-				List<String> champIcon2 = new ArrayList<String>();
+				List<Integer> champIcon1 = new ArrayList<Integer>();
+				List<Integer> champIcon2 = new ArrayList<Integer>();
 				
 				for (CurrentGameParticipant lst : list) {
 					
 					SummonerSpell sp = new SummonerSpell(translation.getSpellImg(lst.getSpell1Id()), translation.getSpellImg(lst.getSpell2Id()));
-					Champion champ = api.getDataChampion(Platform.KR, lst.getChampionId());
+					lst.getChampionId();
 					
 					if(lst.getTeamId() == 100)
 					{
 						team1.add(lst);
-						champIcon1.add(translation.getChampName(champ.getName()));
+						champIcon1.add(lst.getChampionId());
 						spellIcon1.add(sp);
 					}
 					else
 					{
 						team2.add(lst);
-						champIcon2.add(translation.getChampName(champ.getName()));
+						champIcon2.add(lst.getChampionId());
 						spellIcon2.add(sp);
 					}
 				}
@@ -113,7 +111,16 @@ public class SummonerController {
 		return "userprofile";
 	}
 	
-
+	@ResponseBody
+	@GetMapping("/getIcon")
+	public String getIcon(String[] arr) {
+		System.out.println(arr);
+		for (String string : arr) {
+			System.out.println(string);
+		}
+		
+		return "";
+	}
 	
 	
 }
