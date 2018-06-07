@@ -1,8 +1,13 @@
 package org.interior.util;
 
+import java.io.FileReader;
+import java.io.IOException;
 import java.time.Instant;
 import java.time.OffsetDateTime;
 import java.time.ZoneId;
+
+import org.json.JSONObject;
+import org.json.simple.parser.JSONParser;
 
 import net.rithms.riot.api.RiotApiException;
 
@@ -86,14 +91,16 @@ public class translation {
 	}
 	
 	//챔피언 아이콘
-public static String getChampName(String iconCode) throws RiotApiException{
+	public static String getChampName(String iconCode) throws RiotApiException{
 		
-		String iconTag = "<img width='50%' src='http://ddragon.leagueoflegends.com/cdn/8.10.1/img/champion/" 
+		String iconTag = "<img width='50%' src='http://ddragon.leagueoflegends.com/cdn/8.11.1/img/champion/" 
 					+ iconCode
 					+ ".png'>";
 	
 		return iconTag;
 	}
 	
+	
+
 	
 }

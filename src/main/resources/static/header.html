@@ -14,23 +14,33 @@
   </head>
   <body class="container-fluid">
   		
-  		<div class="page-header" style="text-align: center;">
+  		<div class="page-header" style="text-align: center; margin-bottom: 1%;">
   			<h1>My Baron</h1>
 		</div>
 		
-		<div class="container">
-			<form action="userProfile" method="get" class="form-horizontal">
-			  <div class="form-group form-group-lg">
-			    <button style="width: 10%;" type="submit" id="userSerch" class="btn btn-info btn-lg">검색</button>
-			    <div class="col-sm-10">
-			      <input style="display: block;" class="form-control" type="text" id="formGroupInputLarge" name="user" placeholder="닉네임을 입력해주세요">
-			    </div>
-			    
-			  </div>
-			</form>
+		<nav class="navbar">
+			<div class="container-fluid">
+			  	<ul class="nav nav-pills navbar-right" role="tablist">
+					<li role="presentation"><a class="btn btn-warning" href="#">로그인</a></li>
+					<li role="presentation"><a class="btn btn-warning" href="form.html">회원가입</a></li>
+				</ul>
+			</div>
+		</nav>
+		
+		<div style="margin-top: 10%;">
+			<div class="container">
+				<form action="userProfile" method="get" class="form-horizontal">
+				  <div class="form-group form-group-lg">
+				    <button style="width: 10%;" type="submit" id="userSerch" class="btn btn-info btn-lg">검색</button>
+				    <div class="col-sm-10">
+				      <input style="display: block;" class="form-control" type="text" id="formGroupInputLarge" name="user" placeholder="닉네임을 입력해주세요">
+				    </div>
+				    
+				  </div>
+				</form>
+			</div>
 		</div>
 		
-		<hr>
 
   </body>
 </html>

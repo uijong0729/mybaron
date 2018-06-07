@@ -12,42 +12,61 @@
     <script src="/webjars/bootstrap/4.1.0/js/bootstrap.min.js"></script>
    <script type="text/javascript">
     $(document).ready(function(){
-    	$('#header').load("/header.html");
+    	
     });
+    
+    function checkForm(){
+    	var pw1 = $('#password').val();
+    	var pw2 = $('#password2').val();
+    	
+    	if(pw1 == pw2)
+    	{
+    		return true;
+    	}
+    	else
+    	{
+    		alert('비밀번호 재입력값이 다릅니다.')
+    		return false;
+    	}
+    }
     
     </script>
   </head>
 
   <body class="container-fluid">
-    <div id="header">
-  		
-	</div>
+      	<div class="page-header" style="text-align: center; margin-bottom: 1%;">
+  			<h1>My Baron</h1>
+		</div>
+		
+		<nav class="navbar">
+			<div class="container-fluid">
+			  	<ul class="nav nav-pills navbar-right" role="tablist">
+					<li role="presentation"><a class="btn btn-warning" href="#">로그인</a></li>
+					<li role="presentation"><a class="btn btn-warning" href="form.html">회원가입</a></li>
+				</ul>
+			</div>
+		</nav>
+	<hr>
 	
 		
 		<div class="container">
 		<h1>회원가입</h1>
 		<hr>
-			<form>
+			<form action="insertUser" method="post" onsubmit="return checkForm();">
 			  <div class="form-group">
-			    <label for="exampleInputEmail1">이메일 주소</label>
-			    <input type="email" class="form-control" id="exampleInputEmail1" placeholder="이메일을 입력하세요">
+			    <label for="exampleInputPassword1">닉네임</label>
+			    <input name="name" type="text" class="form-control" placeholder="닉네임을 입력하세요">
 			  </div>
 			  <div class="form-group">
 			    <label for="exampleInputPassword1">암호</label>
-			    <input type="password" class="form-control" id="exampleInputPassword1" placeholder="비밀번호를 입력하세요">
+			    <input name="password" id="password" type="password" class="form-control" placeholder="비밀번호를 입력하세요">
 			  </div>
 			  <div class="form-group">
 			    <label for="exampleInputPassword1">암호확인</label>
-			    <input type="password" class="form-control" id="exampleInputPassword1" placeholder="위와 동일한 비밀번호를 한번 더 입력하세요">
-			  </div>
-			  <div class="form-group">
-			    <label for="exampleInputPassword1">닉네임</label>
-			    <input type="password" class="form-control" id="exampleInputNickname" placeholder="게시글 작성에 이용 될 별명을 입력하세요">
+			    <input id="password2" type="password" class="form-control" placeholder="위와 동일한 비밀번호를 한번 더 입력하세요">
 			  </div>
 			  <hr>
-			  	<!-- Indicates a successful or positive action -->
 				<button type="submit" class="btn btn-success">가입하기</button>
-				<!-- Standard button -->
 				<button type="button" class="btn btn-default" onclick="location.href='/index.html'">취소</button>
 			</form>
 		</div>	
