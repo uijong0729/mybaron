@@ -42,9 +42,7 @@ public class SummonerController {
 	@GetMapping("/userProfile")
 	public String userProfile(Model model, String user) throws RiotApiException {
 		
-		JsonData jd = new JsonData();
-		jd.parseJson();
-		
+	
 		//소환사
 		try 
 		{
@@ -67,24 +65,24 @@ public class SummonerController {
 				List<CurrentGameParticipant> team2 = new ArrayList<CurrentGameParticipant>();
 				List<SummonerSpell> spellIcon1 = new ArrayList<SummonerSpell>();
 				List<SummonerSpell> spellIcon2 = new ArrayList<SummonerSpell>();
-				//List<String> champIcon1 = new ArrayList<String>();
-				//List<String> champIcon2 = new ArrayList<String>();
+				List<String> champIcon1 = new ArrayList<String>();
+				List<String> champIcon2 = new ArrayList<String>();
 				
 				for (CurrentGameParticipant lst : list) {
 					
 					SummonerSpell sp = new SummonerSpell(translation.getSpellImg(lst.getSpell1Id()), translation.getSpellImg(lst.getSpell2Id()));
-					//Champion champ = api.getDataChampion(Platform.KR, lst.getChampionId());
+					Champion champ = api.getDataChampion(Platform.KR, lst.getChampionId());
 					
 					if(lst.getTeamId() == 100)
 					{
 						team1.add(lst);
-						//champIcon1.add(translation.getChampName(champ.getName()));
+						champIcon1.add(translation.getChampName(champ.getName()));
 						spellIcon1.add(sp);
 					}
 					else
 					{
 						team2.add(lst);
-						//champIcon2.add(translation.getChampName(champ.getName()));
+						champIcon2.add(translation.getChampName(champ.getName()));
 						spellIcon2.add(sp);
 					}
 				}
@@ -95,8 +93,8 @@ public class SummonerController {
 				model.addAttribute("gameInfo_Team2", team2);
 				model.addAttribute("gameInfo_Spell1", spellIcon1);
 				model.addAttribute("gameInfo_Spell2", spellIcon2);
-/*				model.addAttribute("gameInfo_Champ1", champIcon1);
-				model.addAttribute("gameInfo_Champ2", champIcon2);*/
+				model.addAttribute("gameInfo_Champ1", champIcon1);
+				model.addAttribute("gameInfo_Champ2", champIcon2);
 			}
 			catch(Exception e)
 			{
