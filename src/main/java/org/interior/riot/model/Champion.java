@@ -1,10 +1,48 @@
 package org.interior.riot.model;
 
-import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+import lombok.*;
+
 import java.util.Map;
 
-@JsonSerialize
+// Lombok 사용 시 깔끔해진걸 볼 수 있음
+@NoArgsConstructor  // 인자가 없는 생성자를 만들어 줌
+@AllArgsConstructor // 모든 인자가 포함된 생성자를 만들어 줌
+@Getter @Setter     // 모든 멤버 변수에 대한 getter 와 setter 를 만들어 줌
+@ToString           // Champion Class 에 대한 ToString Method 를 만들어 줌
 public class Champion {
+    private String type;
+    private String format;
+    private String version;
+    private Map<String,ChampionDesc> data;
+
+    //@Entity
+    @NoArgsConstructor
+    @AllArgsConstructor
+    @Getter @Setter
+    @ToString
+    private static class ChampionDesc {
+        private String blurb;
+        private String id;
+        private Image image;
+        //@Id
+        //@NonNull
+        private int key;
+        private String name;
+    }
+
+    @NoArgsConstructor
+    @AllArgsConstructor
+    @Getter @Setter
+    @ToString
+    private static class Image {
+        private String full;
+        private String group;
+        private String sprite;
+    }
+}
+
+// Lombok 사용 전
+/*public class Champion {
     private String type;
     private String format;
     private String version;
@@ -57,26 +95,6 @@ public class Champion {
         this.data = data;
     }
 
-    private class Data {
-        private Map<String, ChampionDesc> data;
-
-        public Map<String, ChampionDesc> getData() {
-            return data;
-        }
-
-        public void setData(Map<String, ChampionDesc> data) {
-            this.data = data;
-        }
-
-
-        public Data() {
-        }
-
-        public Data(Map<String, ChampionDesc> data) {
-
-            this.data = data;
-        }
-    }
     //@Entity
     private static class ChampionDesc {
         private String blurb;
@@ -177,6 +195,4 @@ public class Champion {
             this.sprite = sprite;
         }
     }
-}
-
-
+}*/

@@ -84,8 +84,12 @@
 		    <artifactId>h2</artifactId>
 		    <version>1.4.197</version>
 		</dependency>
-		
-				
+
+		<!-- Lombok 사용을 위한 Dependency 추가 -->
+		<dependency>
+			<groupId>org.projectlombok</groupId>
+			<artifactId>lombok</artifactId>
+		</dependency>
 		
 	</dependencies>
 	<build>
