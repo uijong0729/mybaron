@@ -11,7 +11,6 @@
     <script type="text/javascript">
     
 	    $(document).ready(function(){
-	    	$('#header').load("/header.html");
 	    	$.ajaxSettings.traditional = true;
 	    	
 	    	var iconCode = document.getElementsByName('champIcon');
@@ -78,9 +77,7 @@
 </head>
 <body>
 
-    <div id="header">
-  		
-	</div>
+    {{> /include/header }}
 	
 	
 <div class="row" style="text-align: center;">
