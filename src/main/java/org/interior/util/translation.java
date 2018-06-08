@@ -87,7 +87,7 @@ public class translation {
 	//챔피언 아이콘
 	public static String getChampName(String iconCode) throws RiotApiException{
 		
-		String iconTag = "<img width='50%' src='http://ddragon.leagueoflegends.com/cdn/8.11.1/img/champion/" 
+		String iconTag = "<img width='50%' src='http://ddragon.leagueoflegends.com/cdn/8.11.1/img/Champion/"
 					+ iconCode
 					+ ".png'>";
 	
