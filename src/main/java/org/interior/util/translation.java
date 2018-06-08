@@ -83,7 +83,7 @@ public class translation {
 			case 21: spellName = "SummonerBarrier";	break;
 			default: 
 		}
-		String iconTag = "<img width='50%' src='summonerSpell/" 
+		String iconTag = "<img width='25%' src='summonerSpell/" 
 					+ spellName
 					+ ".png'>";
 		

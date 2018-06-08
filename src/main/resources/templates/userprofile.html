@@ -16,7 +16,8 @@
 	    	
 	    	var iconCode = document.getElementsByName('champIcon');
 	    	var arr = new Array();
-
+			var json = "http://ddragon.leagueoflegends.com/cdn/8.11.1/data/en_US/champion.json";
+			
 	    	$.each(iconCode, function(index, value){
 	    		arr[index] = value.textContent;
 	    		//array.push(value.textContent);
@@ -29,16 +30,35 @@
 		    	data: {"arr": arr},
 		    	dataType: "json",
 		    	success: function(result){
-		    		$.getJSON('json/champion.json', function(jsonData) {
-			   	      	$.each(jsonData.data, function(index, value) {
-				    		  if(value.key == 266)
-				    		  {
-				    			alert(value.name);  
-				    		  }
-				     	 });
-			   	    });
-		    	}
-		    }); 
+		    		
+		    		$('#table1').append("<tr>");
+		    		$('#table2').append("<tr>");
+		    		
+		    		$.getJSON(json, function(jsonData) {
+				    		$.each(result, function(ri, rv)
+				    		{
+				    			$.each(jsonData.data, function(index, value) {
+			    					//console.log("result.rv = " + result.rv);
+				    				//console.log("value.key = " + value.key);
+			    					if(value.key == rv)
+					    		  	{
+			    						if(ri < 5)
+			    						{
+			    							$('#table1').append("<td><img width='50%' src='http://ddragon.leagueoflegends.com/cdn/8.11.1/img/champion/"+value.name+".png'></td>")
+			    						}
+			    						else
+			    						{
+			    							$('#table2').append("<td><img width='50%' src='http://ddragon.leagueoflegends.com/cdn/8.11.1/img/champion/"+value.name+".png'></td>")
+			    						}
+					    		 	}//if end
+				    			});//each end			   	      	
+				    		});//each end
+			   	    });//getJson end
+		    		
+			   	    $('#table1').append("</tr>");
+		    		$('#table2').append("</tr>");
+		    	}//Ajax success end
+		    }); //Ajax end
 	 	 });
 		
 	    
@@ -92,7 +112,7 @@
 		<hr>
 			<div class="row">
 			    <div class="col-xs-6 table-responsive">
-					<table style="display: inline-block;" class="table table-hover">
+					<table id="table1" style="display: inline-block;" class="table table-hover">
 							<tr>
 								{{ #gameInfo_Team1 }}
 								<td>{{summonerName}}</td>
@@ -101,7 +121,7 @@
 							
 							<tr>
 							 {{ #gameInfo_Champ1 }}
-								<td name="champIcon">{{{.}}}</td>
+								<td class="champIcon" name="champIcon">{{{.}}}</td>
 							{{ /gameInfo_Champ1 }} 	
 							</tr>
 							
@@ -114,7 +134,7 @@
 				</div>
 				
 				<div class="col-xs-6 table-responsive">
-					<table style="display: inline-block;" class="table table-hover">
+					<table id="table2" style="display: inline-block;" class="table table-hover">
 							<tr>
 								{{ #gameInfo_Team2 }}
 								<td>{{summonerName}}</td>
@@ -123,7 +143,7 @@
 							
 							<tr>
 						 		 {{ #gameInfo_Champ2 }}
-									<td name="champIcon">{{{.}}}</td>
+									<td class="champIcon" name="champIcon">{{{.}}}</td>
 								{{ /gameInfo_Champ2 }}	  
 							</tr>
 							

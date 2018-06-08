@@ -111,15 +111,13 @@ public class SummonerController {
 		return "userprofile";
 	}
 	
+	//json데이터
 	@ResponseBody
 	@GetMapping("/getIcon")
-	public String getIcon(String[] arr) {
-		System.out.println(arr);
-		for (String string : arr) {
-			System.out.println(string);
-		}
+	public String[] getIcon(String[] arr) {
 		
-		return "";
+		
+		return arr;
 	}
 	
 	
