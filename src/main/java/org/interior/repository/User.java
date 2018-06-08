@@ -30,6 +30,10 @@ public class User {
 	@Column(name="summoner_name", nullable = false, length = 20)
 	private String name;
 	
+	@OneToMany
+	@JoinColumn(name="summoner_target")
+	private List<Comment> comments = new ArrayList<Comment>();
+	
 	@Column(nullable = false, length = 20)
 	private String password;
 	
