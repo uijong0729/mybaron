@@ -2,7 +2,52 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+    <script src="/webjars/bootstrap/4.1.0/js/bootstrap.min.js"></script>
     
+    <script>
+   	
+    
+    $(document).ready(function(){
+    	//로그인폼 숨기기
+    	$('#loadLoginForm').hide();
+    	
+    	//로그인 폼 닫기
+    	$('#cancle').on('click', function(){
+    		$('#loadLoginForm').hide('slow');
+    	});
+    	
+    	//로그인 폼 열기
+    	$('#login').on('click', function(){
+    		$('#loadLoginForm').show('slow');
+    	});
+    	
+    	//로그인 요청
+    	$('#submit').on('click', function(){
+    		var formData = $("#formData").serialize();
+    		
+    		$.ajax({
+    			url: '/user/requestLogin',
+    			type: 'post',
+    			data: formData,
+    			dayaType: 'text',
+    			success: function(data){
+    				alert(data + '님 로그인 되었습니다');
+    				$('#loadLoginForm').hide();
+    			},
+    			error: function(){
+    				alert('로그인 정보를 확인해주세요');
+    				$('#name').focus();
+    			}
+    		});
+    	});
+    	
+    });
+    
+    
+    </script>
+    
+    <body>
     
   		<div class="page-header" style="text-align: center; margin-bottom: 1%;">
   			<h1>My Baron</h1>
@@ -10,24 +55,61 @@
 		
 		<nav class="navbar">
 			<div class="container-fluid">
-			  	<ul class="nav nav-pills navbar-right" role="tablist">
-					<li role="presentation"><a class="btn btn-warning" href="#">로그인</a></li>
+			  	<ul class="nav nav-pills navbar-left" role="tablist">
+					<li role="presentation"><a id="login" class="btn btn-warning">로그인</a></li>
 					<li role="presentation"><a class="btn btn-warning" href="/user/signup">회원가입</a></li>
 					<li role="presentation"><a class="btn btn-warning" href="/user/list">회원리스트</a></li>
 				</ul>
 			</div>
 		</nav>
+		<br>
 		
-		<div style="margin-top: 10%;">
+		<div id="loadLoginForm" style="text-align: right; padding: 0;">
+			<form id="formData" method="post">
+				<table style='display: inline-block; text-align: right;' class='table'>
+				
+				<caption>로그인 정보를 입력해주세요</caption>
+				
+				<tr class='info'>
+					<th>닉네임</th> 
+					<td><input id="name" name="name" class='form-control'></td>
+				</tr> 
+				
+				<tr class='info'>
+					<th>비밀번호</th>
+					<td><input name="password" type='password' class='form-control'></td> 
+				</tr>
+				
+				<tr> 
+					<td></td>
+					
+					<td colspan="1">
+						<button type="button" class='btn btn-success' id='submit'>로그인</button>
+						<button type="button" class='btn' id='cancle'>취소</button>
+					</td>
+				</tr>
+				
+				</table>
+			</form>
+		</div>
+		
+		<div style="margin-bottom: 4%;">
 			<div class="container">
 				<form action="userProfile" method="get" class="form-horizontal">
 				  <div class="form-group form-group-lg">
 				    <button style="width: 10%;" type="submit" id="userSerch" class="btn btn-info btn-lg">검색</button>
 				    <div class="col-sm-10">
-				      <input style="display: block;" class="form-control" type="text" id="formGroupInputLarge" name="user" placeholder="닉네임을 입력해주세요">
+				      <input style="display: block;" class="form-control" type="text" id="formGroupInputLarge" name="user" placeholder="검색할 유저 닉네임">
 				    </div>
 				    
 				  </div>
 				</form>
 			</div>
 		</div>
+			
+	</body>	
+		
+		
+		
+		
+		
