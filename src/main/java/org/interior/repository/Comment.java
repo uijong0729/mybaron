@@ -1,6 +1,8 @@
 package org.interior.repository;
 
 
+import java.util.List;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -9,7 +11,20 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+import lombok.ToString;
+
 @Entity
+@Data
+@NoArgsConstructor
+@AllArgsConstructor
+@Getter
+@Setter
+@ToString
 public class Comment {
 
 	@Id
@@ -31,54 +46,5 @@ public class Comment {
 	
 	@Column(nullable = false, length = 30)
 	private String commentPassword;
-
-
-	
-	
-	/*
-	 * 
-	 * 
-	 *  
-	 * 
-	 * 
-	 */
-	
-	public Comment() {
-		// TODO Auto-generated constructor stub
-	}
-	
-	public Long getCommentId() {
-		return commentId;
-	}
-	public void setCommentId(Long commentId) {
-		this.commentId = commentId;
-	}
-	public String getName() {
-		return name;
-	}
-	public void setName(String name) {
-		this.name = name;
-	}
-	public String getContext() {
-		return context;
-	}
-	public void setContext(String context) {
-		this.context = context;
-	}
-	public String getCommentPassword() {
-		return commentPassword;
-	}
-	public void setCommentPassword(String commentPassword) {
-		this.commentPassword = commentPassword;
-	}
-	
-	public String getTarget() {
-		return target;
-	}
-
-	public void setTarget(String target) {
-		this.target = target;
-	}
-	
 	
 }
