@@ -44,7 +44,8 @@ public class Comment {
 	@Column(nullable = false, length = 1000)
 	private String context;
 	
-	@Column(nullable = false, length = 30)
-	private String commentPassword;
+	//사용자의 매너점수
+	@Column(nullable = false, length = 3)
+	private Long manner;
 	
 }
