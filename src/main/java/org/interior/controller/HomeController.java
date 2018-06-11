@@ -33,6 +33,7 @@ public class HomeController {
 		return "/user/form";
 	}
 	
+	//회원리스트
 	@GetMapping("/list")
 	public String users(Model model) {
 		
