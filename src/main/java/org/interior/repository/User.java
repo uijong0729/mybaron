@@ -10,6 +10,13 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.OneToMany;
 
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+import lombok.ToString;
+
 /*
  * 
  * 1. 개체임을 명시하는 애노테이션 추가 : @Entity
@@ -21,6 +28,12 @@ import javax.persistence.OneToMany;
  * 
  */
 @Entity
+@Data
+@NoArgsConstructor
+@AllArgsConstructor
+@Getter
+@Setter
+@ToString
 public class User {
 	
 	@Id
@@ -36,40 +49,6 @@ public class User {
 	
 	@Column(nullable = false, length = 20)
 	private String password;
-	
-	public User() {
-		// TODO Auto-generated constructor stub
-	}
-
-	public Long getId() {
-		return id;
-	}
-
-	public void setId(Long id) {
-		this.id = id;
-	}
-
-	public String getName() {
-		return name;
-	}
-
-	public void setName(String name) {
-		this.name = name;
-	}
-
-	public String getPassword() {
-		return password;
-	}
-
-	public void setPassword(String password) {
-		this.password = password;
-	}
-
-	@Override
-	public String toString() {
-		return "User [id=" + id + ", name=" + name + ", comments=" + comments + ", password=" + password + "]";
-	}
-	
 	
 	
 }
