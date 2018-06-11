@@ -1,4 +1,6 @@
 package org.interior.controller;
+import javax.servlet.http.HttpSession;
+
 import org.interior.repository.User;
 import org.interior.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -41,16 +43,8 @@ public class HomeController {
 		
 		return "/user/list";
 	}
+
 	
-	@ResponseBody
-	@PostMapping("/requestLogin")
-	public String requestLogin(User user) {
-		
-		//System.out.println(user);
-		
-		return "엿머거라";
-		
-	}
 	
 	
 	

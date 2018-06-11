@@ -18,30 +18,69 @@
     	
     	//로그인 폼 열기
     	$('#login').on('click', function(){
-    		$('#loadLoginForm').show('slow');
+    		$('#loadLoginForm').toggle('slow');
     	});
     	
     	//로그인 요청
-    	$('#submit').on('click', function(){
-    		var formData = $("#formData").serialize();
-    		
-    		$.ajax({
-    			url: '/user/requestLogin',
-    			type: 'post',
-    			data: formData,
-    			dayaType: 'text',
-    			success: function(data){
-    				alert(data + '님 로그인 되었습니다');
-    				$('#loadLoginForm').hide();
-    			},
-    			error: function(){
-    				alert('로그인 정보를 확인해주세요');
-    				$('#name').focus();
-    			}
-    		});
-    	});
+    	$('#submit').on('click', loginRequest);
+    	
+    	//로그아웃 요청
+    	$('#logout').on('click', logoutRequest);
     	
     });
+    
+    //로그아웃 요청
+    function logoutRequest(){
+		$.ajax({
+    		url: '/requestLogout',
+    		type: 'post',
+    		success: function(){
+    			location.reload();
+    			alert('로그아웃 되었습니다');
+    		}
+    		
+    	});
+    }
+    
+    //로그인 함수
+    function loginRequest(){
+    	var formData = $("#formData").serialize();
+		
+		$.ajax({
+			url: '/requestLogin',
+			type: 'post',
+			data: formData,
+			dayaType: 'text',
+			success: function(data){
+				if(data != "")
+				{
+					$('#loadLoginForm').hide();
+					$('#name').val('');
+					$('#password').val('');
+					location.reload();
+					alert(data + '님 로그인 되었습니다');
+				}
+				else
+				{
+					alert('로그인 정보를 확인해주세요');
+    				$('#name').focus();
+				}
+			},
+			error: function(){
+				alert('로그인 정보를 확인해주세요');
+				$('#name').focus();
+			}
+		});//ajax close
+    }//function close
+    
+    //엔터 키
+    function enterkey() {
+        if (window.event.keyCode == 13) {
+        	loginRequest();
+        }
+	}
+
+
     
     
     </script>
@@ -49,15 +88,22 @@
     <body>
     
   		<div class="page-header" style="text-align: center; margin-bottom: 1%;">
-  			<h1>My Baron</h1>
+  			<a onclick="javascript: location.href='/'" class="btn" style="font-size: xx-large;">My Baron</a>
 		</div>
 		
 		<nav class="navbar">
 			<div class="container-fluid">
 			  	<ul class="nav nav-pills navbar-left" role="tablist">
+			  	{{^user}}
 					<li role="presentation"><a id="login" class="btn btn-warning">로그인</a></li>
 					<li role="presentation"><a class="btn btn-warning" href="/user/signup">회원가입</a></li>
-					<li role="presentation"><a class="btn btn-warning" href="/user/list">회원리스트</a></li>
+				{{/user}}	
+				
+				{{#user}}
+					<li role="presentation"><a id="logout" class="btn btn-warning">로그아웃</a>
+					</li>
+					<li role="presentation"><a class="btn btn-warning" href="/user/list">가입자 명단</a></li>
+				{{/user}}
 				</ul>
 			</div>
 		</nav>
@@ -71,12 +117,12 @@
 				
 				<tr class='info'>
 					<th>닉네임</th> 
-					<td><input id="name" name="name" class='form-control'></td>
+					<td><input id="name" name="name" class='form-control' onkeyup="enterkey();"></td>
 				</tr> 
 				
 				<tr class='info'>
 					<th>비밀번호</th>
-					<td><input name="password" type='password' class='form-control'></td> 
+					<td><input id="password" name="password" type='password' class='form-control' onkeyup="enterkey();"></td> 
 				</tr>
 				
 				<tr> 
@@ -94,7 +140,7 @@
 		
 		<div style="margin-bottom: 4%;">
 			<div class="container">
-				<form action="userProfile" method="get" class="form-horizontal">
+				<form action="/userProfile" method="get" class="form-horizontal">
 				  <div class="form-group form-group-lg">
 				    <button style="width: 10%;" type="submit" id="userSerch" class="btn btn-info btn-lg">검색</button>
 				    <div class="col-sm-10">

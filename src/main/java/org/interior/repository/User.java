@@ -40,7 +40,7 @@ public class User {
 	@GeneratedValue
 	private Long id;
 	
-	@Column(name="summoner_name", nullable = false, length = 20)
+	@Column(name="name", nullable = false, length = 20)
 	private String name;
 	
 	@OneToMany

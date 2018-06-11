@@ -31,15 +31,15 @@ public class Comment {
 	@GeneratedValue
 	private Long commentId;
 	
-	@Column(name="summoner_target", nullable = false, length = 20)
+	@Column(name="target", nullable = false, length = 20)
 	private String target;
 	
 	@ManyToOne
-	@JoinColumn(name="summoner_name", insertable=false, updatable=false)
+	@JoinColumn(name="name", insertable=false, updatable=false)
 	User user;
 
 	@Column(nullable = false, length = 20)
-	private String name;
+	private String writer;
 	
 	@Column(nullable = false, length = 1000)
 	private String context;
