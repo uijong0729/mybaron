@@ -18,15 +18,20 @@ public class LoginController {
 	public String requestLogin(User user, HttpSession session) {
 		
 		User findUser = userDAO.findByName(user.getName());
+		System.out.println("findUser" + findUser);
+		System.out.println("user" + user);
+		
 		if(findUser == null)
 		{
 			return "";
 		}
 		else
-		{
+		{	
+			//비밀번호가 맞는지 체크
 			if(user.getPassword().equals(findUser.getPassword()))
 			{
 				session.setAttribute("user", findUser);
+				
 				return findUser.getName();
 			}
 		}

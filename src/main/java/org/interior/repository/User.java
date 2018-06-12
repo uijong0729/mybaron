@@ -40,7 +40,7 @@ public class User {
 	@GeneratedValue
 	private Long id;
 	
-	@Column(name="name", nullable = false, length = 20)
+	@Column(name="name", nullable = false, length = 20, unique=true)
 	private String name;
 	
 	@OneToMany
@@ -50,5 +50,6 @@ public class User {
 	@Column(nullable = false, length = 20)
 	private String password;
 	
+
 	
 }

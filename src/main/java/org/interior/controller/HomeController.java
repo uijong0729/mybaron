@@ -29,7 +29,6 @@ public class HomeController {
 	
 	@GetMapping("/signup")
 	public String signup() {
-		//System.out.println("GET : signup");
 		
 		return "/user/form";
 	}

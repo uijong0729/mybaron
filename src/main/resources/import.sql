@@ -1,1 +1,0 @@
-INSERT INTO user (ID, NAME, password) VALUES (0, '푸르밀', 'dkwhd9435');
