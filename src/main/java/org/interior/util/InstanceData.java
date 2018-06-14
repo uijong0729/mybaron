@@ -1,5 +1,9 @@
 package org.interior.util;
 
+import org.interior.repository.RewriteKey;
+import org.interior.repository.RewriteKeyRepository;
+import org.springframework.beans.factory.annotation.Autowired;
+
 public class InstanceData {
 	
 	//키 발급 : https://developer.riotgames.com/

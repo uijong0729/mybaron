@@ -2,6 +2,8 @@ package org.interior.controller;
 
 import javax.servlet.http.HttpSession;
 
+import org.interior.repository.RewriteKey;
+import org.interior.repository.RewriteKeyRepository;
 import org.interior.repository.User;
 import org.interior.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,6 +15,9 @@ public class LoginController {
 
 	@Autowired
 	private UserRepository userDAO;
+	
+	@Autowired
+	private RewriteKeyRepository keyDAO;
 	
 	@PostMapping("/requestLogin")
 	public String requestLogin(User user, HttpSession session) {
@@ -31,8 +36,14 @@ public class LoginController {
 			if(user.getPassword().equals(findUser.getPassword()))
 			{
 				session.setAttribute("user", findUser);
-				
-				return findUser.getName();
+				if(findUser.getName().equals("푸르밀"))
+				{
+					return "Manager";
+				}
+				else 
+				{
+					return findUser.getName();
+				}
 			}
 		}
 		
@@ -45,4 +56,13 @@ public class LoginController {
 		session.removeAttribute("user");
 		
 	}
+	
+	@PostMapping("/inputKey")
+	public void requestLogout(String prompt) {
+		//키 교체
+		RewriteKey newKey = new RewriteKey(9435L, prompt);
+		keyDAO.save(newKey);
+		System.out.println("키 교체 = " + newKey);
+	}
+	
 }

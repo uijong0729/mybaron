@@ -4,10 +4,14 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.NoSuchElementException;
 
+import org.interior.repository.RewriteKey;
+import org.interior.repository.RewriteKeyRepository;
 import org.interior.util.InstanceData;
 import org.interior.util.translation;
 import org.interior.vo.SummonerSpell;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -33,13 +37,30 @@ import net.rithms.riot.constant.Platform;
 @Controller
 public class SummonerController {
 	
-	//초기설정
-	ApiConfig config = new ApiConfig().setKey(InstanceData.key);
-	RiotApi api = new RiotApi(config);
+	@Autowired
+	RewriteKeyRepository keydao;
 	
+	Long key = 9435L;
 	
 	@GetMapping("/userProfile")
 	public String userProfile(Model model, String user) throws RiotApiException {
+		
+		RewriteKey getKey = null;
+		try 
+		{
+			//key
+			getKey = keydao.findById(key).get();
+			System.out.println("키 로드 = " + getKey);
+		}
+		catch (NoSuchElementException e) 
+		{
+			e.printStackTrace();
+			return "/exception/insertKey";
+		}
+				
+		//초기설정
+		ApiConfig config = new ApiConfig().setKey(getKey.getInsertKey());
+		RiotApi api = new RiotApi(config);
 		
 		//소환사
 		try 
@@ -105,10 +126,10 @@ public class SummonerController {
 		catch(Exception e)
 		{
 			model.addAttribute("summoner", "");
-			return "userprofile";
+			return "/userprofile";
 		}
 					
-		return "userprofile";
+		return "/userprofile";
 	}
 	
 	//json데이터

@@ -10,6 +10,8 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.OneToMany;
 
+import org.hibernate.annotations.DynamicUpdate;
+
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.Getter;
@@ -36,7 +38,12 @@ import lombok.ToString;
 public class RewriteKey {
 		
 		@Id
-		@Column(name="insertKey", nullable = false, length = 1023, unique=true)
+		@Column(name="Id", nullable = false, length = 10)
+		private Long Id;
+		
+		@Column(name="insertKey", nullable = false, length = 1023)
 		private String insertKey;
+		
+	
 		
 }

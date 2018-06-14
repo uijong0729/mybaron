@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Please Insert your key</title>
+ {{> /include/link }}
+
+</head>
+<body>
+
+			<form action="/insertKey" method="post">
+				  <div class="form-group">
+				    <label for="exampleInputPassword1">Your Key</label>
+				    <input id="inputName" name="insertKey" type="text" class="form-control" placeholder="yourkey">
+				  </div>
+				  <div class="form-group">
+				    <label for="exampleInputPassword1">Password</label>
+				    <input id="inputName" name="Id" type="text" class="form-control" placeholder="password">
+				  </div>
+
+				  <hr>
+					<button type="submit" class="btn btn-success">Submit</button>
+				</form>
+
+</body>
+</html>
