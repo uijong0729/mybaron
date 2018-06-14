@@ -4,11 +4,15 @@
 <meta charset="UTF-8">
 
 <title>My baron</title>
-     {{> /include/link }}
+     	<script src="/webjars/jquery/3.2.1/jquery.min.js"></script>
+		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+		<script src="/webjars/bootstrap/4.1.0/js/bootstrap.min.js"></script>
     
     <script type="text/javascript">
     
 	    $(document).ready(function(){
+	    	$('#header').load('/include/header.html');
+	    	
 	    	$.ajaxSettings.traditional = true;
 	    	
 	    	var iconCode = document.getElementsByName('champIcon');
@@ -74,7 +78,9 @@
 </head>
 <body>
 
-    {{> /include/header }}
+    <div id="header">
+    
+    </div>
 	
 	
 <div class="row" style="text-align: center;">
