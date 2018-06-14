@@ -6,7 +6,7 @@
 	<groupId>org.interior</groupId>
 	<artifactId>mybaron</artifactId>
 	<version>1.0</version>
-	<packaging>jar</packaging>
+	<packaging>war</packaging>
 
 	<name>mybaron</name>
 	<description>mybaron project with spring boot</description>

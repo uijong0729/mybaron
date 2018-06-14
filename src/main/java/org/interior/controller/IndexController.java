@@ -27,7 +27,7 @@ public class IndexController {
 			keyDAO.save(newKey);
 			System.out.println("키 교체 = " + newKey);
 		}
-		return "index";
+		return "/index";
 	}
 	
 
