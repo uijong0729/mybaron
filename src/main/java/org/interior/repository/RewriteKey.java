@@ -34,7 +34,8 @@ import lombok.ToString;
 @Setter
 @ToString
 public class RewriteKey {
-
+		
+		@Id
 		@Column(name="insertKey", nullable = false, length = 1023, unique=true)
 		private String insertKey;
 		
