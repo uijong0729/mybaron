@@ -15,7 +15,7 @@ public class IndexController {
 	
 	@GetMapping("")
 	public String home() {
-		return "/index";
+		return "index";
 	}
 	
 	@PostMapping("/insertKey")
@@ -27,7 +27,7 @@ public class IndexController {
 			keyDAO.save(newKey);
 			System.out.println("키 교체 = " + newKey);
 		}
-		return "/index";
+		return "index";
 	}
 	
 

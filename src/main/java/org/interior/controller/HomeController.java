@@ -30,7 +30,7 @@ public class HomeController {
 	@GetMapping("/signup")
 	public String signup() {
 		
-		return "/user/form";
+		return "user/form";
 	}
 	
 	//회원리스트
@@ -40,7 +40,7 @@ public class HomeController {
 		//리스트 출력
 		model.addAttribute("userList", userDAO.findAll());
 		
-		return "/user/list";
+		return "user/list";
 	}
 
 	

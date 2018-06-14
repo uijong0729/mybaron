@@ -51,7 +51,7 @@ public class SummonerController {
 		catch (NoSuchElementException e) 
 		{
 			e.printStackTrace();
-			return "/exception/insertKey";
+			return "exception/insertKey";
 		}
 				
 		//초기설정
@@ -122,10 +122,10 @@ public class SummonerController {
 		catch(Exception e)
 		{
 			model.addAttribute("summoner", "");
-			return "/userprofile";
+			return "userprofile";
 		}
 					
-		return "/userprofile";
+		return "userprofile";
 	}
 	
 	//json데이터
