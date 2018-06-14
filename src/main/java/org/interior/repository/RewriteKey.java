@@ -33,22 +33,9 @@ import lombok.ToString;
 @Getter
 @Setter
 @ToString
-public class User {
-	
-	@Id
-	@GeneratedValue
-	private Long id;
-	
-	@Column(name="name", nullable = false, length = 20, unique=true)
-	private String name;
-	
-	@OneToMany
-	@JoinColumn(name="summoner_target")
-	private List<Comment> comments = new ArrayList<Comment>();
-	
-	@Column(nullable = false, length = 20)
-	private String password;
-	
+public class RewriteKey {
 
-	
+		@Column(name="insertKey", nullable = false, length = 1023, unique=true)
+		private String insertKey;
+		
 }
