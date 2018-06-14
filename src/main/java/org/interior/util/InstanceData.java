@@ -1,7 +1,7 @@
 package org.interior.util;
 
-import org.interior.repository.RewriteKey;
-import org.interior.repository.RewriteKeyRepository;
+import org.interior.repository.Geykey;
+import org.interior.repository.getkeyRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 
 public class InstanceData {

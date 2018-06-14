@@ -2,8 +2,8 @@ package org.interior.controller;
 
 import javax.servlet.http.HttpSession;
 
-import org.interior.repository.RewriteKey;
-import org.interior.repository.RewriteKeyRepository;
+import org.interior.repository.Geykey;
+import org.interior.repository.getkeyRepository;
 import org.interior.repository.User;
 import org.interior.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,7 +17,7 @@ public class LoginController {
 	private UserRepository userDAO;
 	
 	@Autowired
-	private RewriteKeyRepository keyDAO;
+	private getkeyRepository keyDAO;
 	
 	@PostMapping("/requestLogin")
 	public String requestLogin(User user, HttpSession session) {
@@ -60,7 +60,7 @@ public class LoginController {
 	@PostMapping("/inputKey")
 	public void requestLogout(String prompt) {
 		//키 교체
-		RewriteKey newKey = new RewriteKey(9435L, prompt);
+		Geykey newKey = new Geykey(9435L, prompt);
 		keyDAO.save(newKey);
 		System.out.println("키 교체 = " + newKey);
 	}

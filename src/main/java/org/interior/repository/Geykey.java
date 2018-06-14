@@ -35,14 +35,14 @@ import lombok.ToString;
 @Getter
 @Setter
 @ToString
-public class RewriteKey {
+public class Geykey {
 		
 		@Id
 		@Column(name="Id", nullable = false, length = 10)
 		private Long Id;
 		
-		@Column(name="insertKey", nullable = false, length = 1023)
-		private String insertKey;
+		@Column(name="key", nullable = false, length = 1023)
+		private String key;
 		
 	
 		
