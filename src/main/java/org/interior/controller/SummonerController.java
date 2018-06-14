@@ -6,8 +6,8 @@ import java.util.List;
 import java.util.Map;
 import java.util.NoSuchElementException;
 
+import org.interior.repository.GetkeyRepository;
 import org.interior.repository.Geykey;
-import org.interior.repository.getkeyRepository;
 import org.interior.util.InstanceData;
 import org.interior.util.translation;
 import org.interior.vo.SummonerSpell;
@@ -38,7 +38,7 @@ import net.rithms.riot.constant.Platform;
 public class SummonerController {
 	
 	@Autowired
-	getkeyRepository keydao;
+	GetkeyRepository keydao;
 	
 	Long key = 9435L;
 	

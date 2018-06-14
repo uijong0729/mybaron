@@ -2,7 +2,7 @@ package org.interior.repository;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 								//<테이블이름, id의 자료형타입>
-public interface getkeyRepository extends JpaRepository<Geykey, Long>{
+public interface GetkeyRepository extends JpaRepository<Geykey, Long>{
 	
 	
 }

@@ -2,8 +2,8 @@ package org.interior.controller;
 
 import javax.servlet.http.HttpSession;
 
+import org.interior.repository.GetkeyRepository;
 import org.interior.repository.Geykey;
-import org.interior.repository.getkeyRepository;
 import org.interior.repository.User;
 import org.interior.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,7 +17,7 @@ public class LoginController {
 	private UserRepository userDAO;
 	
 	@Autowired
-	private getkeyRepository keyDAO;
+	private GetkeyRepository keyDAO;
 	
 	@PostMapping("/requestLogin")
 	public String requestLogin(User user, HttpSession session) {
