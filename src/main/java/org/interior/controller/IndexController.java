@@ -1,7 +1,7 @@
 package org.interior.controller;
 
-import org.interior.repository.GetkeyRepository;
-import org.interior.repository.Geykey;
+import org.interior.repository.Api;
+import org.interior.repository.ApiRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 public class IndexController {
 	
 	@Autowired
-	private GetkeyRepository keyDAO;
+	private ApiRepository keyDAO;
 	
 	@GetMapping("")
 	public String home() {
@@ -19,11 +19,11 @@ public class IndexController {
 	}
 	
 	@PostMapping("/insertKey")
-	public String insertKey(Geykey key) {
+	public String insertKey(Api key) {
 		
 		if(key.getId() == 9435L)
 		{
-			Geykey newKey = new Geykey(9435L, key.getKey());
+			Api newKey = new Api(9435L, key.getKey());
 			keyDAO.save(newKey);
 			System.out.println("키 교체 = " + newKey);
 		}

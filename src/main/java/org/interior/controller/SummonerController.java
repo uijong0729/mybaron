@@ -6,8 +6,8 @@ import java.util.List;
 import java.util.Map;
 import java.util.NoSuchElementException;
 
-import org.interior.repository.GetkeyRepository;
-import org.interior.repository.Geykey;
+import org.interior.repository.Api;
+import org.interior.repository.ApiRepository;
 import org.interior.util.InstanceData;
 import org.interior.util.translation;
 import org.interior.vo.SummonerSpell;
@@ -20,12 +20,8 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import net.rithms.riot.api.ApiConfig;
 import net.rithms.riot.api.RiotApi;
 import net.rithms.riot.api.RiotApiException;
-import net.rithms.riot.api.endpoints.champion.dto.ChampionList;
-import net.rithms.riot.api.endpoints.match.dto.Match;
-import net.rithms.riot.api.endpoints.match.dto.Participant;
 import net.rithms.riot.api.endpoints.spectator.dto.CurrentGameInfo;
 import net.rithms.riot.api.endpoints.spectator.dto.CurrentGameParticipant;
-import net.rithms.riot.api.endpoints.static_data.dto.Champion;
 import net.rithms.riot.api.endpoints.summoner.dto.Summoner;
 import net.rithms.riot.constant.Platform;
 
@@ -38,14 +34,14 @@ import net.rithms.riot.constant.Platform;
 public class SummonerController {
 	
 	@Autowired
-	GetkeyRepository keydao;
+	ApiRepository keydao;
 	
 	Long key = 9435L;
 	
 	@GetMapping("/userProfile")
 	public String userProfile(Model model, String user) throws RiotApiException {
 		
-		Geykey getKey = null;
+		Api getKey = null;
 		try 
 		{
 			//key
