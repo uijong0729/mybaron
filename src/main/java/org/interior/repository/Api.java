@@ -2,6 +2,7 @@ package org.interior.repository;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 
 import lombok.AllArgsConstructor;
@@ -19,6 +20,7 @@ import lombok.ToString;
 public class Api {
 
 	@Id
+	@GeneratedValue
 	@Column(name="Id", nullable = false, length = 10)
 	private Long Id;
 
