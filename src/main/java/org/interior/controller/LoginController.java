@@ -57,12 +57,4 @@ public class LoginController {
 		
 	}
 	
-	@PostMapping("/inputKey")
-	public void requestLogout(String prompt) {
-		//키 교체
-		Api newKey = new Api(9435L, prompt);
-		keyDAO.save(newKey);
-		System.out.println("키 교체 = " + newKey);
-	}
-	
 }

@@ -20,10 +20,11 @@ import lombok.ToString;
 public class Api {
 
 	@Id
-	@GeneratedValue
 	@Column(name="Id", nullable = false, length = 10)
 	private Long Id;
 
-	@Column(name="api_key", nullable = false, length = 512)
-	private String key;
+	@Column(name="api_key", length = 512)
+	private String api_key;
+	
+	
 }

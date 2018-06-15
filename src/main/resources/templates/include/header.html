@@ -54,36 +54,11 @@
 			success: function(data){
 				if(data != "")
 				{
-					if(data != "푸르밀")
-					{
 						$('#loadLoginForm').hide();
 						$('#name').val('');
 						$('#password').val('');
 						location.reload();
 						alert(data + '님 로그인 되었습니다');
-					}
-					else
-					{
-						$('#loadLoginForm').hide();
-						$('#name').val('');
-						$('#password').val('');
-						location.reload();
-						if(confirm('Do you want insert a new key?'))
-						{
-							var prompt = prompt('input your key');
-							$.ajax({
-								url: '/inputKey',
-								type: 'post',
-								data: prompt,
-								success: function(){
-									alert('success');
-								},
-								error: function(){
-									alert('fail');
-								}
-							});
-						}
-					}
 				}
 				else
 				{

@@ -23,7 +23,7 @@ public class IndexController {
 		
 		if(key.getId() == 9435L)
 		{
-			Api newKey = new Api(9435L, key.getKey());
+			Api newKey = new Api(9435L, key.getApi_key());
 			keyDAO.save(newKey);
 			System.out.println("키 교체 = " + newKey);
 		}

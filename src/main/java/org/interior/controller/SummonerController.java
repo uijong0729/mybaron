@@ -45,17 +45,18 @@ public class SummonerController {
 		try 
 		{
 			//key
-			getKey = keydao.findById(key).get();
-			System.out.println("키 로드 = " + getKey);
+			getKey = keydao.findById(9435L).get();
+			//System.out.println("키 로드 = " + getKey);
 		}
 		catch (NoSuchElementException e) 
 		{
-			e.printStackTrace();
+			//e.printStackTrace();
 			return "exception/insertKey";
 		}
 				
 		//초기설정
-		ApiConfig config = new ApiConfig().setKey(getKey.getKey());
+		//System.out.println("키 확인" + getKey);
+		ApiConfig config = new ApiConfig().setKey(getKey.getApi_key());
 		RiotApi api = new RiotApi(config);
 		
 		//소환사
