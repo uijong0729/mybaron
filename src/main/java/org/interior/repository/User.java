@@ -50,8 +50,5 @@ public class User {
 	private String password;
 	
 
-	public void update() {
-		
-	}
 	
 }

@@ -1,5 +1,9 @@
 package org.interior.util;
 
+import javax.servlet.http.HttpSession;
+
+import org.interior.repository.User;
+
 public class InstanceData {
 	
 	//키 발급 : https://developer.riotgames.com/

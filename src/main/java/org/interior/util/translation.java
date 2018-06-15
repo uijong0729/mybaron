@@ -94,6 +94,11 @@ public class translation {
 		return iconTag;
 	}
 	
+	//현재시간 계산
+	public static String currentTime() {
+		return "월" + "일" + " : ";
+	}
+	
 	
 
 	
