@@ -9,20 +9,16 @@
 
 </head>
 
-  <script>
-  $(document).ready(function(){
-	  $('#header').load('/include/header.html'); 
-  });
-  
-  </script>
-  
+
 <body>
 
-  	<div id="header">
-  	
-  	</div>
+ {{> include/header }}	
 
-			<form action="/insertKey" method="post">
+	<div style="margin-left: 20%; margin-right: 20%;">
+	<div style="text-align: center; color: gray;">존재하지 않는 소환사거나 인증키가 만료되었습니다.</div>
+	<div style="text-align: center;"><a href="https://developer.riotgames.com/">https://developer.riotgames.com/</a></div>
+			<br><br>
+			<form action="/insertKey" method="post" style="text-align: center;">
 				  <div class="form-group">
 				    <label for="exampleInputPassword1">Your Key</label>
 				    <input id="inputName" name="api_key" type="text" class="form-control" placeholder="yourkey">
@@ -35,6 +31,6 @@
 				  <hr>
 					<button type="submit" class="btn btn-success">Submit</button>
 				</form>
-
+	</div>
 </body>
 </html>

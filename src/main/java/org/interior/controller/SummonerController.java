@@ -53,19 +53,25 @@ public class SummonerController {
 			//e.printStackTrace();
 			return "exception/insertKey";
 		}
-				
-		//초기설정
-		//System.out.println("키 확인" + getKey);
+		
 		ApiConfig config = new ApiConfig().setKey(getKey.getApi_key());
 		RiotApi api = new RiotApi(config);
+		
 		
 		//소환사
 		try 
 		{
-			Summoner summoner = api.getSummonerByName(Platform.KR, user);
-			model.addAttribute("summoner", summoner);
-			model.addAttribute("iconImg", translation.getIconCode(summoner.getProfileIconId()));
-			
+			Summoner summoner = null;
+			try 
+			{
+				summoner = api.getSummonerByName(Platform.KR, user);
+				model.addAttribute("summoner", summoner);
+				model.addAttribute("iconImg", translation.getIconCode(summoner.getProfileIconId()));
+			}
+			catch(RiotApiException e)
+			{
+				return "exception/insertKey";
+			}
 			
 			//현재 게임
 			try 
@@ -114,7 +120,7 @@ public class SummonerController {
 			}
 			catch(Exception e)
 			{
-				e.printStackTrace();
+				//e.printStackTrace();
 				model.addAttribute("gameInfo_Time", "현재 게임 중이 아닙니다.");
 				model.addAttribute("gameInfo_Mode", "게임 중인 경우만 정보가 표시됩니다.");
 			}
@@ -122,7 +128,6 @@ public class SummonerController {
 		}
 		catch(Exception e)
 		{
-			model.addAttribute("summoner", "");
 			return "userprofile";
 		}
 					

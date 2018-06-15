@@ -22,7 +22,7 @@ public class Visitor {
 
 	@Id
 	@GeneratedValue
-	private int vNum;
+	private int num;
 	
 	@Column(name="title", nullable=false, length=100)
 	private String title;

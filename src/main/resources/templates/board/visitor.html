@@ -31,11 +31,8 @@
 		position:absolute;
 		left:30%;
 		top:40%;
-		width: 40%;
-		height: 56%;
 		background: rgba(255, 255, 200, 0.9); 
 		border-radius: 10px;
-		
 		text-align: center;
 		z-index: 1000;
 	}
@@ -60,7 +57,7 @@
 		$('#mask').hide();
 		$('#close').on('click', close);
 		$('#opener').on('click', open);
-		$('#submit').on('click', submitForm);
+		$('#goWrite').on('click', submitForm);
 	});
 	
 	function submitForm(){
@@ -100,42 +97,27 @@
 	<div class="container" style="text-align: center;">
 		<div class="table-responsive">
 			<table class="table table-hover">
-				<tr>
+				<tr class="info">
 					<th class="th1">번호</th>
 					<th class="th4">제목</th>
 					<th class="th2">작성자</th>
 					<th class="th3">작성일</th>
 				</tr>
 				{{# visitor }}
-				<tr>
-					<td>{{ id }}</td>
-					<td>{{ title }}</td>
-					<td>{{ writer }}</td>
-					<td>{{ date }}</td>
-				</tr>
+					{{#content}}
+					<tr>
+						<td>{{ num }}</td>
+						<td><a href="readVisitor?num={{ num }}">{{ title }}</a></td>
+						<td>{{ writer }}</td>
+						<td>{{ date }}</td>
+					</tr>
+					{{/content}}
+					
 				{{/ visitor }}
 			</table>
 		</div>	<!-- table div -->	
 		<hr>
-		<nav style="text-align: center;">
-		  <ul class="pagination">
-		    <li>
-		      <a href="#" aria-label="Previous">
-		        <span aria-hidden="true">&laquo;</span>
-		      </a>
-		    </li>
-		    <li><a href="#">1</a></li>
-		    <li><a href="#">2</a></li>
-		    <li><a href="#">3</a></li>
-		    <li><a href="#">4</a></li>
-		    <li><a href="#">5</a></li>
-		    <li>
-		      <a href="#" aria-label="Next">
-		        <span aria-hidden="true">&raquo;</span>
-		      </a>
-		    </li>
-		  </ul>
-		</nav>
+		<div style="color: gray; text-align: center;">최신글 12개만 표시되며, 전체 게시글이 12개 이상인 경우 게시판이 초기화됩니다.</div>
 		
 		{{#user}}
 		<div style="text-align: center; margin-top: 1%;">
@@ -144,7 +126,7 @@
 		{{/user}}
 	</div><!-- container -->	
 	
-	<div id="popup">
+	<div id="popup" class="table-responsive">
 			<form id="writeform">
 				<table class="table">
 					<tr>
@@ -166,7 +148,7 @@
 					<tr>
 						<th></th>
 						<th style="text-align: center;">
-							<button class="btn btn-default" id="submit" type="button">완료</button> <button class="btn btn-default" id="close" type="button">취소</button>
+							<button class="btn btn-default" id="goWrite" type="button">완료</button> <button class="btn btn-default" id="close" type="button">취소</button>
 						</th>
 					</tr>
 				</table>	

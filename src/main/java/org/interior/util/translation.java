@@ -1,8 +1,11 @@
 package org.interior.util;
 
+import java.text.SimpleDateFormat;
 import java.time.Instant;
 import java.time.OffsetDateTime;
 import java.time.ZoneId;
+import java.util.Date;
+
 import net.rithms.riot.api.RiotApiException;
 
 public class translation {
@@ -96,7 +99,12 @@ public class translation {
 	
 	//현재시간 계산
 	public static String currentTime() {
-		return "월" + "일" + " : ";
+		
+		long time = System.currentTimeMillis(); 
+
+		SimpleDateFormat dayTime = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
+		
+		return dayTime.format(new Date(time));
 	}
 	
 	
