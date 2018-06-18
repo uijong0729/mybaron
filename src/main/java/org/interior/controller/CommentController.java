@@ -1,6 +1,8 @@
 package org.interior.controller;
 
 
+import java.util.ArrayList;
+
 import javax.servlet.http.HttpSession;
 
 import org.interior.repository.User;
@@ -9,9 +11,8 @@ import org.interior.repository.VisitorRepository;
 import org.interior.util.translation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort.Direction;
-import org.springframework.data.web.PageableDefault;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -25,18 +26,25 @@ public class CommentController {
 	VisitorRepository vdao;
 	
 	@GetMapping("/visitor")
-	public String visitor(Model model,  
-		@PageableDefault(sort = { "num" }, direction = Direction.DESC, size = 12) Pageable pageable) {
+	public String visitor(Model model, int nPage) {
 		
-		Page<Visitor> page = vdao.findAll(pageable);
-		model.addAttribute("visitor", page);
+				
+		//페이지, 아이템갯수, 정렬방식, 정렬
+		PageRequest page = PageRequest.of(nPage, 5, Direction.DESC, "num");
 		
-		System.out.println("getSize = " + page.getTotalElements());
+		Page<Visitor> pageList = vdao.findAll(page);
+		model.addAttribute("visitor", pageList.getContent());
 		
-		if(page.getTotalElements() >= 12)
+		
+		ArrayList<Integer> pList = new ArrayList<Integer>();
+		
+		for(int i = 0 ; i < pageList.getTotalPages() ; i++)
 		{
-			vdao.deleteAll();
+			pList.add(i);
 		}
+		
+		model.addAttribute("nPage", pList);
+		
 		
 		return "board/visitor";
 	}

@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Please Insert your key</title>
+<script src="/webjars/jquery/3.2.1/jquery.min.js"></script>
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+<script src="/webjars/bootstrap/4.1.0/js/bootstrap.min.js"></script>
+
+</head>
+
+
+<body>
+
+ {{> include/header }}	
+
+	<div style="margin-left: 20%; margin-right: 20%;">
+	<div style="text-align: center; color: gray;">존재하지 않는 소환사거나 인증키가 만료되었습니다.</div>
+	<div style="text-align: center;"><a href="https://developer.riotgames.com/">https://developer.riotgames.com/</a></div>
+			<br><br>
+			<form action="/insertKey" method="post" style="text-align: center;">
+				  <div class="form-group">
+				    <label for="exampleInputPassword1">Your Key</label>
+				    <input id="inputName" name="api_key" type="text" class="form-control" placeholder="yourkey">
+				  </div>
+				  <div class="form-group">
+				    <label for="exampleInputPassword1">Password</label>
+				    <input id="inputName" name="Id" type="text" class="form-control" placeholder="password">
+				  </div>
+
+				  <hr>
+					<button type="submit" class="btn btn-success">Submit</button>
+				</form>
+	</div>
+</body>
+</html>

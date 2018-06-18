@@ -15,6 +15,7 @@ public class IndexController {
 	
 	@GetMapping("")
 	public String home() {
+	
 		return "index";
 	}
 	
@@ -33,5 +34,7 @@ public class IndexController {
 	public String api() {
 		return "exception/insertKey";
 	}
+	
+	
 
 }

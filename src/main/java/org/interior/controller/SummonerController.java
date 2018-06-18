@@ -81,7 +81,6 @@ public class SummonerController {
 				
 				String printTime = translation.epochCalculator(activity.getGameStartTime());
 				String gameMode = translation.gameMode(activity.getGameMode());
-				
 				List<CurrentGameParticipant> list = activity.getParticipants();
 				List<CurrentGameParticipant> team1 = new ArrayList<CurrentGameParticipant>();
 				List<CurrentGameParticipant> team2 = new ArrayList<CurrentGameParticipant>();

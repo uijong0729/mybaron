@@ -114,13 +114,13 @@
 					<table id="table1" style="display: inline-block;" class="table table-hover">
 							<tr>
 								{{ #gameInfo_Team1 }}
-								<td><a href="userProfile?user={{summonerName}}">{{summonerName}}</a></td>
+								<td>{{summonerName}}</td>
 								{{ /gameInfo_Team1 }}
 							</tr>
 							
 							<tr>
 							 {{ #gameInfo_Champ1 }}
-								<td class="champIcon" name="champIcon" hidden="hidden">{{.}}</td>
+								<td class="champIcon" name="champIcon">{{{.}}}</td>
 							{{ /gameInfo_Champ1 }} 	
 							</tr>
 							
@@ -136,13 +136,13 @@
 					<table id="table2" style="display: inline-block;" class="table table-hover">
 							<tr>
 								{{ #gameInfo_Team2 }}
-								<td><a href="userProfile?user={{summonerName}}">{{summonerName}}</a></td>
+								<td>{{summonerName}}</td>
 								{{ /gameInfo_Team2 }}
 							</tr>
 							
 							<tr>
 						 		 {{ #gameInfo_Champ2 }}
-									<td class="champIcon" name="champIcon" hidden="hidden">{{{.}}}</td>
+									<td class="champIcon" name="champIcon">{{{.}}}</td>
 								{{ /gameInfo_Champ2 }}	  
 							</tr>
 							

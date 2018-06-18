@@ -71,7 +71,7 @@
 				location.reload();
 			},
 			error: function(){
-				alert('로그인 정보를 확인해주세요');
+				alert('알 수 없는 요청입니다.');
 			}
 		});
 	}
@@ -104,33 +104,20 @@
 					<th class="th3">작성일</th>
 				</tr>
 				{{# visitor }}
+					{{#content}}
 					<tr>
 						<td>{{ num }}</td>
 						<td><a href="readVisitor?num={{ num }}">{{ title }}</a></td>
 						<td>{{ writer }}</td>
 						<td>{{ date }}</td>
 					</tr>
+					{{/content}}
 					
 				{{/ visitor }}
 			</table>
 		</div>	<!-- table div -->	
-		
-	<hr>
-		
-		<!-- 페이지넘버 삽입 -->
-		<nav>
-		  <ul class="pagination">
-		   
-		    {{# nPage }}
-		    <li><a href="visitor?nPage={{.}}">{{.}}</a></li>
-		    {{/ nPage }}
-		    
-		  </ul>
-		</nav>
-		
-		
-		
-				
+		<hr>
+		<div style="color: gray; text-align: center;">최신글 12개만 표시되며, 전체 게시글이 12개 이상인 경우 게시판이 초기화됩니다.</div>
 		
 		{{#user}}
 		<div style="text-align: center; margin-top: 1%;">
