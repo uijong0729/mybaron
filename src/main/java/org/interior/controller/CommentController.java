@@ -5,6 +5,8 @@ import java.util.ArrayList;
 
 import javax.servlet.http.HttpSession;
 
+import org.interior.repository.Comment;
+import org.interior.repository.CommentRepository;
 import org.interior.repository.User;
 import org.interior.repository.Visitor;
 import org.interior.repository.VisitorRepository;
@@ -24,6 +26,20 @@ public class CommentController {
 
 	@Autowired
 	VisitorRepository vdao;
+	
+	@Autowired
+	CommentRepository cdao;
+	
+	@ResponseBody
+	@PostMapping("/insertUserComment")
+	public void insertUserComment(Comment comment, HttpSession session) {
+		
+			User user = (User) session.getAttribute("user");
+			comment.setWriter(user.getName());
+			
+			System.out.println(cdao.save(comment));
+		
+	}
 	
 	@GetMapping("/visitor")
 	public String visitor(Model model, int nPage) {

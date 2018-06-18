@@ -40,7 +40,7 @@ public class IndexController {
 		if(size < 1 || size < keys.length || cdao.findByVersion(VersionJson.getVersion()).size() < 1)
 		{
 			ChampionList map = ChampionJson.getChampion();
-			cdao.deleteAll();
+			cdao.deleteAll();	
 			
 			for (String string : keys) {
 				

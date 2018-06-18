@@ -7,8 +7,65 @@
      {{> include/link }}
     
     <script type="text/javascript">
+    
+    $(document).ready(function(){
+    	$('#popup').hide();
+		$('#mask').hide();
+		$('#close').on('click', close);
+		$('#commentWrite').on('click', open);
+		
+    	$('#goWrite').on('click', function(){
+    		var formData = $('#commentForm').serialize();
+    		$.ajax({
+    			url: '/insertUserComment',
+    			type: 'post',
+    			data: formData,
+    			success: function(){
+    				alert('등록에 성공했습니다')
+    				location.reload();
+    			},
+    			error: function(){
+    				alert('로그인 사용자만 등록 할 수 있습니다')
+    			}
+    		});
+    	});
+    });
+    
+	function open(){
+		$('#popup').show('slow');
+		$('#mask').show();
+	}
+	
+	function close(){
+		$('#popup').hide('slow');
+		$('#mask').hide();
+	}
+    
     </script>
-
+    
+    
+    <style type="text/css" >
+	    #popup{
+			position:absolute;
+			left:30%;
+			top:40%;
+			background: rgba(255, 255, 200, 0.9); 
+			border-radius: 10px;
+			text-align: center;
+			z-index: 1000;
+		}
+		
+		#mask {  
+			  position:absolute;  
+			  left:0;
+			  top:0;
+			 	 width: 100%;
+				height: 150%;
+			  z-index:400;  
+			  background-color: rgba(0, 0, 0, 0.2);  
+			  display:none;  
+			}
+    </style>
 	    
 	   
 </head>
@@ -17,34 +74,85 @@
     {{> include/header }}
 	
 	
-<div class="row" style="text-align: center;">
-  	<div class="col-xs-2">
-	 	{{#summoner}}
-	 		<!-- 아이콘 -->
-		 	{{ #profileIconId }}
-	  			<span style="display: none;" id="iconCode">{{.}}</span>	
-	  		{{ /profileIconId }}
-	 		<ul style="list-style: none;">
-	 			<li>{{ #name }} {{.}} {{ /name }}</li>
-	 			<li>{{ #summonerLevel }}	레벨 : {{.}}	{{ /summonerLevel }}</li>
-		{{/summoner}}
-  				{{#iconImg}}
-  				<li>{{{ iconImg }}}</li>
-				{{/iconImg}}
-			</ul>
-	</div>
-		<div class="col-xs-3">	
-		{{ #gameInfo_Time }}
-				{{.}}
-		{{ /gameInfo_Time }}
-		<br>
-	
-		{{ #gameInfo_Mode }}
-				{{.}}
-		{{ /gameInfo_Mode }}
+	<div class="jumbotron jumbotron-fluid container">
+	  <div class="container">
 	  
+	  <div class='row'>
+		  	<div class='col-sm-6'>
+				<h3 class="display-3">{{#summoner}} {{ #name }} {{.}} {{ /name }} (Lv. {{ #summonerLevel }}{{.}}{{ /summonerLevel }})  {{/summoner}}</h3>
+			    
+				    <p class="lead">{{ #profileIconId }}
+					    
+					    <span style="display: none;" id="iconCode">{{.}}</span>{{ /profileIconId }}
+					    
+				    </p>
+			  	
+			  	<ul style="list-style: none;">
+			  	{{#summoner}}
+				  	{{#iconImg}}
+				  		<li style="padding-left: 4%;"> {{{ iconImg }}}</li>
+					{{/iconImg}}
+				{{/summoner}}
+				</ul>
+				
+				<ul style="list-style: none;">
+					<li id="commentWrite" style="margin: 0; padding: 0;"><button class="btn btn-primary">유저평가 작성</button></li>
+				</ul>
+			</div>
+		  	
+		  	<div class='col-sm-6'>
+				<table class="table">
+						<tr scope="col">
+							<th></th>
+							<th style="text-align: left;"><h4>유저 코멘트</h4></th>
+						</tr>
+					
+					{{#commentList}}
+					<tr>
+						<td scope="col" style="color: blue; width: 20%;">
+							{{writer}}
+						</td>
+						<td scope="col" style="width: 80%;">
+							{{context}}
+						</td>
+					</tr>
+					{{/commentList}}
+					
+					{{^commentList}}
+					<tr>
+						<td scope="col">
+						코멘트가 없습니다.
+						</td>
+					</tr>
+					{{/commentList}}
+				</table>
+<!-- 				<div style="color: gray; text-align: center;">
+					유저 코멘트는 최근 8건만 표시됩니다
+				</div> -->
+			</div>
+		</div>
+	    
+	  
+	  </div>
+	</div>
+	
+	<div class="row border border-primary">
+	  	<div class="col-xs-2">
+		 	
+		 		<!-- 아이콘 -->
+		</div>
+		
+		<div class="col-xs-3">	
+			{{ #gameInfo_Time }}
+					{{.}}
+			{{ /gameInfo_Time }}
+			<br>
+	
+			{{ #gameInfo_Mode }}
+					{{.}}
+			{{ /gameInfo_Mode }}
   		</div>
- </div>
+ 	</div>
   
   
 <div class="container">
@@ -98,6 +206,40 @@
 			
 		 </div><!-- 경기현황 -->
 	</div> <!-- container -->
+	
+	
+	<div id="popup" class="table-responsive">
+			<form id="commentForm">
+				<table class="table">
+					<tr>
+						<th></th>
+						<th class="active" style="text-align: center;">코멘트 작성하기</th>
+					</tr>
+					
+					<tr>
+						<th class="active">내용</th>
+						<td><textarea name="context" style="resize: none;" rows="5" cols="60"></textarea></td>
+					</tr>
+
+					<tr>
+						<th></th>
+						<th style="text-align: center;">
+							<button class="btn btn-default" id="goWrite" type="button">완료</button> <button class="btn btn-default" id="close" type="button">취소</button>
+						</th>
+					</tr>
+				</table>	
+				
+				{{#summoner}} 
+				<input name="target" type="hidden" value="{{name}}">
+				{{/summoner}}
+				
+			</form>
+		
+	</div>
+	
+	<div id="mask">
+	
+	</div>
 
 <br><br><br><br><br><br><br><br><br><br><br><br>
 </body>

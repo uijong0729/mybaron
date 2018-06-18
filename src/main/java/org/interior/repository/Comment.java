@@ -6,8 +6,6 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.Getter;
@@ -28,21 +26,14 @@ public class Comment {
 	@GeneratedValue
 	private Long commentId;
 	
-	@Column(name="target", nullable = false, length = 20)
+	@Column(name="target", nullable = false, length = 30)
 	private String target;
-	
-	@ManyToOne
-	@JoinColumn(name="name", insertable=false, updatable=false)
-	User user;
 
-	@Column(nullable = false, length = 20)
+	@Column(nullable = false, length = 30)
 	private String writer;
 	
 	@Column(nullable = false, length = 1000)
 	private String context;
 	
-	//사용자의 매너점수
-	@Column(nullable = false, length = 3)
-	private Long manner;
 	
 }

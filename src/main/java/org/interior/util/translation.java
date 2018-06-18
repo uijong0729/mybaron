@@ -51,7 +51,7 @@ public class translation {
 	
 	//게임 아이콘
 	public static String getIconCode(int iconCode) throws RiotApiException{
-		String iconTag = "<img width='30%' src='http://opgg-static.akamaized.net/images/profile_icons/profileIcon" 
+		String iconTag = "<img width='15%' src='http://opgg-static.akamaized.net/images/profile_icons/profileIcon" 
 					+ iconCode 
 					+ ".jpg'>";
 		

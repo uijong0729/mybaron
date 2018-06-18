@@ -8,11 +8,16 @@ import java.util.NoSuchElementException;
 
 import org.interior.repository.Api;
 import org.interior.repository.ApiRepository;
+import org.interior.repository.Comment;
+import org.interior.repository.CommentRepository;
 import org.interior.repository.riotapi.ChampionDatabaseRepository;
 import org.interior.util.InstanceData;
 import org.interior.util.translation;
 import org.interior.vo.SummonerSpell;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Sort.Direction;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -41,10 +46,14 @@ public class SummonerController {
 	@Autowired
 	private ChampionDatabaseRepository cdao;
 	
+	@Autowired
+	private CommentRepository crdao;
+	
 	Long key = 9435L;
 	
 	@GetMapping("/userProfile")
 	public String userProfile(Model model, String user) throws RiotApiException {
+		
 		
 		Api getKey = null;
 		try 
@@ -72,6 +81,15 @@ public class SummonerController {
 				summoner = api.getSummonerByName(Platform.KR, user);
 				model.addAttribute("summoner", summoner);
 				model.addAttribute("iconImg", translation.getIconCode(summoner.getProfileIconId()));
+				
+				//코멘트 불러오기
+				//PageRequest page = PageRequest.of(0, 8, Direction.DESC, "commentId");
+				//Page<Comment> commentPage = (Page) crdao.findByTarget(summoner.getName());
+				
+				model.addAttribute("commentList", crdao.findByTarget(summoner.getName()));
+				
+				
+				
 			}
 			catch(RiotApiException e)
 			{
@@ -135,18 +153,16 @@ public class SummonerController {
 		{
 			return "userprofile";
 		}
-					
+				
+		
+		
+		
+		
+		
 		return "userprofile";
-	}
 	
-	//json데이터
-	@ResponseBody
-	@GetMapping("/getIcon")
-	public String[] getIcon(String[] arr) {
-		
-		
-		return arr;
-	}
+	}//userProfile
 	
+
 	
 }

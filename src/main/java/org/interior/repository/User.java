@@ -1,14 +1,10 @@
 package org.interior.repository;
 
-import java.util.ArrayList;
-import java.util.List;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.OneToMany;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -41,10 +37,6 @@ public class User {
 	
 	@Column(name="name", nullable = false, length = 20, unique=true)
 	private String name;
-	
-	@OneToMany
-	@JoinColumn(name="summoner_target")
-	private List<Comment> comments = new ArrayList<Comment>();
 	
 	@Column(nullable = false, length = 20)
 	private String password;
