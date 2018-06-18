@@ -8,6 +8,7 @@ import java.util.NoSuchElementException;
 
 import org.interior.repository.Api;
 import org.interior.repository.ApiRepository;
+import org.interior.repository.riotapi.ChampionDatabaseRepository;
 import org.interior.util.InstanceData;
 import org.interior.util.translation;
 import org.interior.vo.SummonerSpell;
@@ -24,6 +25,7 @@ import net.rithms.riot.api.endpoints.spectator.dto.CurrentGameInfo;
 import net.rithms.riot.api.endpoints.spectator.dto.CurrentGameParticipant;
 import net.rithms.riot.api.endpoints.summoner.dto.Summoner;
 import net.rithms.riot.constant.Platform;
+import riot.VersionJson;
 
 /*
  * http://taycaldwell.com/riot-api-java/doc/
@@ -35,6 +37,9 @@ public class SummonerController {
 	
 	@Autowired
 	ApiRepository keydao;
+	
+	@Autowired
+	private ChampionDatabaseRepository cdao;
 	
 	Long key = 9435L;
 	
@@ -86,25 +91,26 @@ public class SummonerController {
 				List<CurrentGameParticipant> team2 = new ArrayList<CurrentGameParticipant>();
 				List<SummonerSpell> spellIcon1 = new ArrayList<SummonerSpell>();
 				List<SummonerSpell> spellIcon2 = new ArrayList<SummonerSpell>();
-				List<Integer> champIcon1 = new ArrayList<Integer>();
-				List<Integer> champIcon2 = new ArrayList<Integer>();
+				List<String> champIcon1 = new ArrayList<String>();
+				List<String> champIcon2 = new ArrayList<String>();
 				
 				for (CurrentGameParticipant lst : list) {
 					
 					SummonerSpell sp = new SummonerSpell(translation.getSpellImg(lst.getSpell1Id()), translation.getSpellImg(lst.getSpell2Id()));
-					lst.getChampionId();
+					String getFull = cdao.findByIndividualKey(lst.getChampionId()).getFull();
 					
 					if(lst.getTeamId() == 100)
 					{
 						team1.add(lst);
-						champIcon1.add(lst.getChampionId());
 						spellIcon1.add(sp);
+						
+						champIcon1.add("http://ddragon.leagueoflegends.com/cdn/"+VersionJson.getVersion()+"/img/champion/"+getFull);
 					}
 					else
 					{
 						team2.add(lst);
-						champIcon2.add(lst.getChampionId());
 						spellIcon2.add(sp);
+						champIcon2.add("http://ddragon.leagueoflegends.com/cdn/"+VersionJson.getVersion()+"/img/champion/"+getFull);
 					}
 				}
 				

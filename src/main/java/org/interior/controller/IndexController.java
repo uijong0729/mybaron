@@ -37,7 +37,7 @@ public class IndexController {
 		
 		
 		//챔피언 DB사빕
-		if(size < 1 || size < keys.length || cdao.findByVersion(VersionJson.getVersion()) == null)
+		if(size < 1 || size < keys.length || cdao.findByVersion(VersionJson.getVersion()).size() < 1)
 		{
 			ChampionList map = ChampionJson.getChampion();
 			cdao.deleteAll();

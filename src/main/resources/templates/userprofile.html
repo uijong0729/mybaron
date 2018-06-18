@@ -7,66 +7,6 @@
      {{> include/link }}
     
     <script type="text/javascript">
-    
-	    $(document).ready(function(){
-	    	$.ajaxSettings.traditional = true;
-	    	
-	    	var iconCode = document.getElementsByName('champIcon');
-	    	var arr = new Array();
-			var json = "http://ddragon.leagueoflegends.com/cdn/8.11.1/data/en_US/champion.json";
-			
-	    	$.each(iconCode, function(index, value){
-	    		arr[index] = value.textContent;
-	    	});
-	    	
-	    	
-		    $.ajax({
-		    	url: "getIcon",
-		    	type: "get",
-		    	data: {"arr": arr},
-		    	dataType: "json",
-		    	success: function(result){
-		    		
-		    		$('#table1').append("<tr>");
-		    		$('#table2').append("<tr>");
-		    		
-		    		$.getJSON(json, function(jsonData) {
-		    				//console.log(jsonData);
-				    		$.each(result, function(ri, rv)
-				    		{
-				    			$.each(jsonData.data, function(index, value) {
-			    					//console.log("result.rv = " + result.rv);
-				    				//console.log("value.key = " + value.key);
-			    					if(value.key == rv)
-					    		  	{
-			    						if(ri < 5)
-			    						{
-			    							console.log(value.image.full);
-			    							$('#table1').append("<td><img alt='챔피언' width='50%' src='http://ddragon.leagueoflegends.com/cdn/8.11.1/img/champion/" + value.image.full + "'></td>");
-			    						}
-			    						else
-			    						{
-			    							console.log(value.image.full);
-			    							$('#table2').append("<td><img alt='챔피언' width='50%' src='http://ddragon.leagueoflegends.com/cdn/8.11.1/img/champion/" + value.image.full + "'></td>");
-			    							
-			    						}
-					    		 	}//if end
-				    			});//each end			   	      	
-				    		});//each end
-			   	    });//getJson end
-		    		
-			   	    $('#table1').append("</tr>");
-		    		$('#table2').append("</tr>");
-		    		
-		    	}//Ajax success end
-		    }); //Ajax end
-	 	 });
-		
-	    
-	    
-
-
-
     </script>
 
 	    
@@ -120,7 +60,7 @@
 							
 							<tr>
 							 {{ #gameInfo_Champ1 }}
-								<td class="champIcon" name="champIcon" hidden="hidden">{{.}}</td>
+								<td class="champIcon" name="champIcon"><img width="50%" src="{{.}}"></td>
 							{{ /gameInfo_Champ1 }} 	
 							</tr>
 							
@@ -142,7 +82,7 @@
 							
 							<tr>
 						 		 {{ #gameInfo_Champ2 }}
-									<td class="champIcon" name="champIcon" hidden="hidden">{{{.}}}</td>
+									<td class="champIcon" name="champIcon"><img width="50%" src="{{.}}"></td>
 								{{ /gameInfo_Champ2 }}	  
 							</tr>
 							
