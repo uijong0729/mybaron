@@ -6,7 +6,11 @@ import java.time.OffsetDateTime;
 import java.time.ZoneId;
 import java.util.Date;
 
+import org.interior.repository.riotapi.ChampionDatabaseRepository;
+import org.springframework.beans.factory.annotation.Autowired;
+
 import net.rithms.riot.api.RiotApiException;
+import riot.VersionJson;
 
 public class translation {
 	
@@ -18,6 +22,17 @@ public class translation {
 		OffsetDateTime gameTime = OffsetDateTime.ofInstant(now, ZoneId.systemDefault()); 
 		
 		String printTime = gameTime.getHour() + "시 " + mm(gameTime.getMinute()) + "분 " + mm(gameTime.getSecond()) + "초";
+		
+		return printTime;
+	}
+	
+	//epoch시간을 날짜 시간 분으로 환산
+	public static String epochCalculator2(Long time)
+	{
+		Instant now = Instant.ofEpochMilli(time);
+		OffsetDateTime gameTime = OffsetDateTime.ofInstant(now, ZoneId.systemDefault()); 
+		
+		String printTime = gameTime.getMonth().getValue() + "월 " + gameTime.getDayOfMonth() + "일 <br>" + gameTime.getHour() + "시  " + mm(gameTime.getMinute()) + "분 ";
 		
 		return printTime;
 	}
@@ -87,15 +102,7 @@ public class translation {
 		return iconTag;
 	}
 	
-	//챔피언 아이콘
-	public static String getChampName(String iconCode) throws RiotApiException{
-		
-		String iconTag = "<img width='50%' src='http://ddragon.leagueoflegends.com/cdn/8.11.1/img/champion/" 
-					+ iconCode
-					+ ".png'>";
-	
-		return iconTag;
-	}
+
 	
 	//현재시간 계산
 	public static String currentTime() {
@@ -105,6 +112,18 @@ public class translation {
 		SimpleDateFormat dayTime = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
 		
 		return dayTime.format(new Date(time));
+	}
+	
+	public static String isWinToString(boolean isWin) {
+		
+		if(isWin)
+		{
+			return "<span style='color: blue;'>승리</span>";
+		}
+		else
+		{
+			return "<span style='color: red;'>패배</span>";
+		}
 	}
 	
 	

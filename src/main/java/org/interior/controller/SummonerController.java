@@ -24,8 +24,11 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import net.rithms.riot.api.ApiConfig;
 import net.rithms.riot.api.RiotApi;
 import net.rithms.riot.api.RiotApiException;
+import net.rithms.riot.api.endpoints.match.dto.Match;
 import net.rithms.riot.api.endpoints.match.dto.MatchList;
 import net.rithms.riot.api.endpoints.match.dto.MatchReference;
+import net.rithms.riot.api.endpoints.match.dto.Participant;
+import net.rithms.riot.api.endpoints.match.dto.ParticipantIdentity;
 import net.rithms.riot.api.endpoints.spectator.dto.CurrentGameInfo;
 import net.rithms.riot.api.endpoints.spectator.dto.CurrentGameParticipant;
 import net.rithms.riot.api.endpoints.summoner.dto.Summoner;
@@ -56,6 +59,14 @@ public class SummonerController {
 		Api getKey = keydao.findById(9435L).get();
 		return getKey.getApi_key();
 	}
+	
+	//챔피언 아이콘
+	public String getChampImg(int size, int championCode) throws RiotApiException{
+		return "<img style='margin: 2%; margin-top: 4%;;' width='"+size+"%' src='http://ddragon.leagueoflegends.com/cdn/"+VersionJson.getVersion()+"/img/champion/" 
+				+ cdao.findByIndividualKey(championCode).getFull()
+				+ "'>";
+	}
+	
 	
 	@GetMapping("/userProfile")
 	public String userProfile(Model model, String user) throws RiotApiException {
@@ -189,23 +200,61 @@ public class SummonerController {
 		RiotApi api = new RiotApi(config);
 		try {
 			MatchList ml = api.getMatchListByAccountId(Platform.KR, accountId);
-			
 			List<MatchReference> ml2 = ml.getMatches();
 			
-			for(int i = matchPage ; i < (matchPage + 9) ; i++)
+			for(int i = matchPage ; i < (matchPage + 5) ; i++)
 			{
-				sb.append("<tr>");
-					sb.append("<td><img width='33%' src='http://ddragon.leagueoflegends.com/cdn/"+VersionJson.getVersion()+"/img/champion/" + cdao.findByIndividualKey(ml2.get(i).getChampion()).getFull() + "'></td>");
+				//설정 로드
+				Match mcInfo = api.getMatch(Platform.KR, ml2.get(i).getGameId());
+				List<Participant> mcAr = mcInfo.getParticipants();
+				List<ParticipantIdentity> mcPlayer = mcInfo.getParticipantIdentities();
+				//System.out.println(mcPlayer.get(0).getPlayer().getSummonerName());
+			
+				sb.append("<tr style='background-color: #f8f9fa; padding: 3px; margin-top: 5px; border: 1px thick white;'>");
 					
-					sb.append("<td>매치 큐: " + ml2.get(i).getQueue() + "</td>");
+					//챔피언 아이콘
+					sb.append("<td style='width: 20%;'>"+getChampImg(33, ml2.get(i).getChampion())+"</td>");
 					
-					sb.append("<td>타임 스탬프: " + ml2.get(i).getTimestamp() + "</td>");
+					
+					//게임 모드
+					sb.append("<td style='width: 20%; text-align: center;'>" + translation.gameMode(mcInfo.getGameMode()) + "<br>" + translation.isWinToString(mcAr.get(i).getStats().isWin()) + "</td>");
+					
+					//참가자들
+					sb.append("<td style='width: 40%;'>");
+					for (int k = 0 ; k < mcAr.size() ; k++) {
+						
+						if(mcAr.get(k).getTeamId() == 100)
+						{
+							sb.append(getChampImg(8, mcAr.get(k).getChampionId()) + " ");
+						}
+						else
+						{
+							if(k == 5)
+							{
+								sb.append("<br>" + getChampImg(8, mcAr.get(k).getChampionId()) + " ");
+							}
+							else
+							{
+								sb.append(getChampImg(8, mcAr.get(k).getChampionId()) + " ");
+							}
+							
+						}
+						
+					}
+					sb.append("<hr></td>");
+					
+					
+					sb.append("<td style='width: 20%;'>" + translation.epochCalculator2(ml2.get(i).getTimestamp()) + "</td>");
 				sb.append("</tr>");
 			}
 			
 			
 		} catch (RiotApiException e) {
 			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		catch (Exception e)
+		{
 			e.printStackTrace();
 		}
 		
