@@ -63,9 +63,17 @@ public class SummonerController {
 	
 	//챔피언 아이콘
 	public String getChampImg(int size, int championCode) throws RiotApiException{
-		return "<img style='margin: 2%; margin-top: 4%;;' width='"+size+"%' src='http://ddragon.leagueoflegends.com/cdn/"+VersionJson.getVersion()+"/img/champion/" 
-				+ cdao.findByIndividualKey(championCode).getFull()
-				+ "'>";
+		StringBuffer sb = new StringBuffer();
+		
+		sb.append("<img style='margin: 2%; margin-top: 4%;;' width='");
+		sb.append(size);
+		sb.append("%' src='http://ddragon.leagueoflegends.com/cdn/");
+		sb.append(VersionJson.getVersion());
+		sb.append("/img/champion/");
+		sb.append(cdao.findByIndividualKey(championCode).getFull());
+		sb.append("'>");
+		
+		return sb.toString();
 	}
 	
 	
@@ -213,7 +221,7 @@ public class SummonerController {
 			{
 				//매치 정보
 				Match mcInfo = api.getMatch(Platform.KR, ml2.get(i).getGameId());
-				
+				System.out.println(mcInfo.getGameId());
 				//매치 참가자
 				List<Participant> mcAr = mcInfo.getParticipants();
 				

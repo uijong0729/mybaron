@@ -29,6 +29,7 @@ public class translation {
 	//epoch시간을 날짜 시간 분으로 환산
 	public static String epochCalculator2(Long time)
 	{
+		
 		Instant now = Instant.ofEpochMilli(time);
 		OffsetDateTime gameTime = OffsetDateTime.ofInstant(now, ZoneId.systemDefault()); 
 		
@@ -156,7 +157,7 @@ public class translation {
 		}
 		else
 		{
-			return Math.round(((double) (kills + assists) / (double) deaths)*100)/100.0 + "";
+			return Math.round( ((double) (kills + assists) / (double) deaths) * 100)/100.0 + "";
 		}
 		
 	}
