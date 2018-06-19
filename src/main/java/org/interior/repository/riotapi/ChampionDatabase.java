@@ -4,9 +4,6 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 
-import org.interior.repository.Comment;
-import org.interior.repository.User;
-
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.Getter;

@@ -1,8 +1,4 @@
 package org.interior.controller;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Iterator;
-import java.util.Map.Entry;
 import org.interior.repository.Api;
 import org.interior.repository.ApiRepository;
 import org.interior.repository.riotapi.ChampionDatabase;
@@ -30,8 +26,6 @@ public class IndexController {
 	public String home() {
 		
 		//현재버전
-		String ar = VersionJson.getVersion();
-		
 		String[] keys = ChampionJson.ChampionArray();
 		int size = cdao.findAll().size();
 		

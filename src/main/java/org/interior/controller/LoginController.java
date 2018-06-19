@@ -2,8 +2,6 @@ package org.interior.controller;
 
 import javax.servlet.http.HttpSession;
 
-import org.interior.repository.Api;
-import org.interior.repository.ApiRepository;
 import org.interior.repository.User;
 import org.interior.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,9 +13,6 @@ public class LoginController {
 
 	@Autowired
 	private UserRepository userDAO;
-	
-	@Autowired
-	private ApiRepository keyDAO;
 	
 	@PostMapping("/requestLogin")
 	public String requestLogin(User user, HttpSession session) {

@@ -1,9 +1,7 @@
 package org.interior.controller;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 import java.util.NoSuchElementException;
 
 import org.interior.repository.Api;
@@ -11,7 +9,6 @@ import org.interior.repository.ApiRepository;
 import org.interior.repository.Comment;
 import org.interior.repository.CommentRepository;
 import org.interior.repository.riotapi.ChampionDatabaseRepository;
-import org.interior.util.InstanceData;
 import org.interior.util.translation;
 import org.interior.vo.SummonerSpell;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -49,7 +46,8 @@ public class SummonerController {
 	@Autowired
 	private CommentRepository crdao;
 	
-	Long key = 9435L;
+	public int cPage = 0;
+	
 	
 	@GetMapping("/userProfile")
 	public String userProfile(Model model, String user) throws RiotApiException {
@@ -83,17 +81,28 @@ public class SummonerController {
 				model.addAttribute("iconImg", translation.getIconCode(summoner.getProfileIconId()));
 				
 				//코멘트 불러오기
-				//PageRequest page = PageRequest.of(0, 8, Direction.DESC, "commentId");
-				//Page<Comment> commentPage = (Page) crdao.findByTarget(summoner.getName());
+				PageRequest page = PageRequest.of(cPage, 5, Direction.DESC, "commentId");
+				Page<Comment> commentPage = crdao.findAllByTargetOrderByCommentIdDesc(summoner.getName(), page);
+				model.addAttribute("commentList", commentPage.getContent());
 				
-				model.addAttribute("commentList", crdao.findByTarget(summoner.getName()));
-				
+				//페이지 갯수 가져가기
+				ArrayList<Integer> cList = new ArrayList<Integer>();
+				for(int i = 0 ; i < commentPage.getTotalPages() ; i++)
+				{
+					cList.add(i);
+				}
+				model.addAttribute("cPage", cList);
 				
 				
 			}
 			catch(RiotApiException e)
 			{
+				
 				return "exception/insertKey";
+			}
+			catch(Exception e)
+			{
+				e.printStackTrace();
 			}
 			
 			//현재 게임
@@ -163,6 +172,14 @@ public class SummonerController {
 	
 	}//userProfile
 	
-
+	
+	//페이지
+	@ResponseBody
+	@GetMapping(value="/getCommentPage")
+	public void getCommentPage(int currentPage) {
+		//System.out.println("넘어왔다" + currentPage);
+		cPage = currentPage;
+	}
+	
 	
 }
