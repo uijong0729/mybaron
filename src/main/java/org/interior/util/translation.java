@@ -129,10 +129,15 @@ public class translation {
 	
 	//kda form maker
 	public static String kdaFormMaker(int kills, int deaths, int assists) {
-		return "<span style='color: blue;'>" 
-					+ kills + "</span>/<span style='color: red;'>" 
-					+ deaths + "</span>/<span style='color: green;'>" 
-					+ assists + "</span>";
+		StringBuffer sb = new StringBuffer();
+		sb.append("<span style='color: blue;'>");
+		sb.append(kills);
+		sb.append("</span>/<span style='color: red;'>");
+		sb.append(deaths);
+		sb.append("</span>/<span style='color: green;'>" );
+		sb.append(assists);
+		sb.append("</span>");
+		return sb.toString();
 	}
 	
 	//kda form calculator
@@ -151,7 +156,7 @@ public class translation {
 		}
 		else
 		{
-			return ((double) (kills + assists) / (double) deaths) + "";
+			return Math.round(((double) (kills + assists) / (double) deaths)*100)/100.0 + "";
 		}
 		
 	}

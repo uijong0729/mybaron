@@ -194,16 +194,21 @@ public class SummonerController {
 	@ResponseBody
 	@GetMapping(value="/getPastGame")
 	public String getPastGame(Long accountId, int matchPage) {
-		
+
 		StringBuffer sb = new StringBuffer();
 		ApiConfig config = new ApiConfig().setKey(getApiKey());
 		RiotApi api = new RiotApi(config);
+		
 		try {
 			//MatchList ml = api.getMatchListByAccountId(Platform.KR, accountId);
-			MatchList ml = api.getMatchListByAccountId(Platform.KR, accountId, null, null, null, -1, -1, matchPage*10, (matchPage*10)+9);
+			
+			MatchList ml = api.getMatchListByAccountId(Platform.KR, accountId, null, null, null, -1, -1, matchPage*10, (matchPage*10)+10);
 			
 			List<MatchReference> ml2 = ml.getMatches();
 			
+
+			
+			long start = System.currentTimeMillis(); //시작하는 시점 계산
 			for(int i = 0 ; i < 10 ; i++)
 			{
 				//매치 정보
@@ -213,53 +218,60 @@ public class SummonerController {
 				List<Participant> mcAr = mcInfo.getParticipants();
 				
 				//매치 참자가의 플레이어 정보
-				List<ParticipantIdentity> mcPlayer = mcInfo.getParticipantIdentities();
+				//List<ParticipantIdentity> mcPlayer = mcInfo.getParticipantIdentities();
+				//System.out.println(mcPlayer.get(0).getPlayer().getSummonerName());
 				
 				//매치 참가자의 인게임 활약
 				ParticipantStats pStat = mcAr.get(i).getStats();
-				
-				
-				//System.out.println(mcPlayer.get(0).getPlayer().getSummonerName());
-				
+
 				sb.append("<tr style='background-color: #f8f9fa; padding: 3px; margin-top: 5px; border: 1px thick white;'>");
 					
 					//챔피언 아이콘
-					sb.append("<td style='width: 10%;'>"+getChampImg(80, ml2.get(i).getChampion())+"</td>");
+					sb.append("<td style='width: 10%;'>");
+					sb.append(getChampImg(80, ml2.get(i).getChampion()));
+					sb.append("</td>");
 					
 					//KDA
-					sb.append("<td style='width: 10%; text-align: center;'>" + translation.kdaFormMaker(pStat.getKills(), pStat.getDeaths(), pStat.getAssists()) + "<br><span style='padding: 4%; margin: 3%; border-radius: 3px; border: 1px solid gray; background-color: blue; color: white;'>" + translation.kdaCal(pStat.getKills(), pStat.getDeaths(), pStat.getAssists()) + "</span></td>");
+					sb.append("<td style='width: 10%; text-align: center;'>");
+					sb.append(translation.kdaFormMaker(pStat.getKills(), pStat.getDeaths(), pStat.getAssists()));
+					sb.append("<br><span style='padding: 4%; margin: 3%; border-radius: 3px; border: 1px solid gray; background-color: blue; color: white;'>");
+					sb.append(translation.kdaCal(pStat.getKills(), pStat.getDeaths(), pStat.getAssists()));
+					sb.append("</span></td>");
 					
 					//게임 모드
-					sb.append("<td style='width: 20%; text-align: center;'>" + translation.gameMode(mcInfo.getGameMode()) + "<br>" + translation.isWinToString(mcAr.get(i).getStats().isWin()) + "</td>");
+					sb.append("<td style='width: 20%; text-align: center;'>");
+					sb.append(translation.gameMode(mcInfo.getGameMode()));
+					sb.append("<br>");
+					sb.append(translation.isWinToString(mcAr.get(i).getStats().isWin()));
+					sb.append("</td>");
 					
 					//참가자들
 					sb.append("<td style='width: 40%;'>");
+					
 					for (int k = 0 ; k < mcAr.size() ; k++) {
 						
-						if(mcAr.get(k).getTeamId() == 100)
+						if(k != 5)
 						{
-							sb.append(getChampImg(8, mcAr.get(k).getChampionId()) + " ");
+							sb.append(getChampImg(8, mcAr.get(k).getChampionId()));
+							sb.append(" ");
 						}
 						else
 						{
-							if(k == 5)
-							{
-								sb.append("<br>" + getChampImg(8, mcAr.get(k).getChampionId()) + " ");
-							}
-							else
-							{
-								sb.append(getChampImg(8, mcAr.get(k).getChampionId()) + " ");
-							}
-							
+							sb.append("<br>");
+							sb.append(getChampImg(8, mcAr.get(k).getChampionId()));
+							sb.append(" ");
 						}
 						
 					}
-					sb.append("<hr></td>");
+					sb.append("<hr></td><td style='width: 20%;'>");
+					sb.append(translation.epochCalculator2(ml2.get(i).getTimestamp()));
+					sb.append("</td>");
 					
-					
-					sb.append("<td style='width: 20%;'>" + translation.epochCalculator2(ml2.get(i).getTimestamp()) + "</td>");
 				sb.append("</tr>");
 			}
+			
+			long end = System.currentTimeMillis(); //프로그램이 끝나는 시점 계산
+			System.out.println( "실행 시간 : " + ( end - start )/1000.0 +"초"); //실행 시간 계산 및 출력
 			
 			
 		} catch (RiotApiException e) {
@@ -270,6 +282,9 @@ public class SummonerController {
 		{
 			e.printStackTrace();
 		}
+		
+
+
 		
 		return sb.toString();
 	}
