@@ -31,6 +31,8 @@
     		});
     	});
     	
+		var matchPage = 0;
+    	
     	//코멘트 페이지 이동
     	$('.page-link').on('click', function(){
     		var currentPage = $(this).attr('val');
@@ -43,7 +45,6 @@
     			success: function(){
     				location.reload();
     			}
-    			
     		});
     		
     	});
@@ -51,7 +52,6 @@
     	//과거 게임 불러오기
     	$('#loadPastGame').on('click', function(){
 			var accountId = $('#accountId').val();
-			var matchPage = 0;
 			
     		console.log(accountId);
     		$.ajax({
@@ -61,6 +61,12 @@
     			dataType: 'text',
     			success: function(result){
     				$('#gameTable').append(result);
+    				$('#loadPastGame').html('다음 10개 전적 추가로 가져오기');
+    				++matchPage;
+    			},
+    			error: function()
+    			{
+    				alert('처리 중입니다 기다려주세요');
     			}
     			
     		});
@@ -259,11 +265,11 @@
 	
 	
 	<div class="container">
-		<button class="btn btn-primary btn-block" id="loadPastGame">이전전적검색</button>
-		<br>
 		<table class="table" id="gameTable">
 				
 		</table>
+		<br>
+		<button class="btn btn-primary btn-block" id="loadPastGame">이전전적 불러오기</button>
 	</div>
 	
 	

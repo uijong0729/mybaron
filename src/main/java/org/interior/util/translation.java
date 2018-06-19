@@ -114,6 +114,7 @@ public class translation {
 		return dayTime.format(new Date(time));
 	}
 	
+	//승리 패배 리턴
 	public static String isWinToString(boolean isWin) {
 		
 		if(isWin)
@@ -124,6 +125,35 @@ public class translation {
 		{
 			return "<span style='color: red;'>패배</span>";
 		}
+	}
+	
+	//kda form maker
+	public static String kdaFormMaker(int kills, int deaths, int assists) {
+		return "<span style='color: blue;'>" 
+					+ kills + "</span>/<span style='color: red;'>" 
+					+ deaths + "</span>/<span style='color: green;'>" 
+					+ assists + "</span>";
+	}
+	
+	//kda form calculator
+	public static String kdaCal(int kills, int deaths, int assists) {
+		
+		if(deaths == 0)
+		{
+			if(kills != 0 || assists != 0)
+			{
+				return "perfect";
+			}
+			else
+			{
+				return "아무것도 못함";
+			}
+		}
+		else
+		{
+			return ((double) (kills + assists) / (double) deaths) + "";
+		}
+		
 	}
 	
 	

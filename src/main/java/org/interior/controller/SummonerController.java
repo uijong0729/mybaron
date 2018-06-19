@@ -29,6 +29,7 @@ import net.rithms.riot.api.endpoints.match.dto.MatchList;
 import net.rithms.riot.api.endpoints.match.dto.MatchReference;
 import net.rithms.riot.api.endpoints.match.dto.Participant;
 import net.rithms.riot.api.endpoints.match.dto.ParticipantIdentity;
+import net.rithms.riot.api.endpoints.match.dto.ParticipantStats;
 import net.rithms.riot.api.endpoints.spectator.dto.CurrentGameInfo;
 import net.rithms.riot.api.endpoints.spectator.dto.CurrentGameParticipant;
 import net.rithms.riot.api.endpoints.summoner.dto.Summoner;
@@ -195,26 +196,38 @@ public class SummonerController {
 	public String getPastGame(Long accountId, int matchPage) {
 		
 		StringBuffer sb = new StringBuffer();
-		
 		ApiConfig config = new ApiConfig().setKey(getApiKey());
 		RiotApi api = new RiotApi(config);
 		try {
-			MatchList ml = api.getMatchListByAccountId(Platform.KR, accountId);
+			//MatchList ml = api.getMatchListByAccountId(Platform.KR, accountId);
+			MatchList ml = api.getMatchListByAccountId(Platform.KR, accountId, null, null, null, -1, -1, matchPage*10, (matchPage*10)+9);
+			
 			List<MatchReference> ml2 = ml.getMatches();
 			
-			for(int i = matchPage ; i < (matchPage + 5) ; i++)
+			for(int i = 0 ; i < 10 ; i++)
 			{
-				//설정 로드
+				//매치 정보
 				Match mcInfo = api.getMatch(Platform.KR, ml2.get(i).getGameId());
+				
+				//매치 참가자
 				List<Participant> mcAr = mcInfo.getParticipants();
+				
+				//매치 참자가의 플레이어 정보
 				List<ParticipantIdentity> mcPlayer = mcInfo.getParticipantIdentities();
+				
+				//매치 참가자의 인게임 활약
+				ParticipantStats pStat = mcAr.get(i).getStats();
+				
+				
 				//System.out.println(mcPlayer.get(0).getPlayer().getSummonerName());
-			
+				
 				sb.append("<tr style='background-color: #f8f9fa; padding: 3px; margin-top: 5px; border: 1px thick white;'>");
 					
 					//챔피언 아이콘
-					sb.append("<td style='width: 20%;'>"+getChampImg(33, ml2.get(i).getChampion())+"</td>");
+					sb.append("<td style='width: 10%;'>"+getChampImg(80, ml2.get(i).getChampion())+"</td>");
 					
+					//KDA
+					sb.append("<td style='width: 10%; text-align: center;'>" + translation.kdaFormMaker(pStat.getKills(), pStat.getDeaths(), pStat.getAssists()) + "<br><span style='padding: 4%; margin: 3%; border-radius: 3px; border: 1px solid gray; background-color: blue; color: white;'>" + translation.kdaCal(pStat.getKills(), pStat.getDeaths(), pStat.getAssists()) + "</span></td>");
 					
 					//게임 모드
 					sb.append("<td style='width: 20%; text-align: center;'>" + translation.gameMode(mcInfo.getGameMode()) + "<br>" + translation.isWinToString(mcAr.get(i).getStats().isWin()) + "</td>");
