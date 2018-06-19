@@ -48,6 +48,26 @@
     		
     	});
     	
+    	//과거 게임 불러오기
+    	$('#loadPastGame').on('click', function(){
+			var accountId = $('#accountId').val();
+			var matchPage = 0;
+			
+    		console.log(accountId);
+    		$.ajax({
+    			url: '/getPastGame',
+    			type: 'get',
+    			data: {accountId: accountId, matchPage: matchPage},
+    			dataType: 'text',
+    			success: function(result){
+    				$('#gameTable').append(result);
+    			}
+    			
+    		});
+    		
+    		
+    	});
+    	
     });
     
 	function open(){
@@ -238,6 +258,17 @@
 	</div> <!-- container -->
 	
 	
+	<div class="container">
+		<button class="btn btn-primary" id="loadPastGame">이전전적검색</button>
+		<table id="gameTable">
+				
+		</table>
+	</div>
+	
+	
+	
+	
+	
 	<div id="popup" class="table-responsive">
 			<form id="commentForm">
 				<table class="table">
@@ -260,7 +291,8 @@
 				</table>	
 				
 				{{#summoner}} 
-				<input name="target" type="hidden" value="{{name}}">
+					<input name="target" type="hidden" value="{{name}}">
+					<input id="accountId" type="hidden" value="{{accountId}}">
 				{{/summoner}}
 				
 			</form>

@@ -64,9 +64,15 @@ public class IndexController {
 		}
 		return "index";
 	}
+	
 	@GetMapping("/api")
 	public String api() {
 		return "exception/insertKey";
+	}
+	
+	@GetMapping("/test")
+	public String test() {
+		return "TestPage";
 	}
 	
 	

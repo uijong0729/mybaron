@@ -18,8 +18,6 @@ public class LoginController {
 	public String requestLogin(User user, HttpSession session) {
 		
 		User findUser = userDAO.findByName(user.getName());
-		System.out.println("findUser" + findUser);
-		System.out.println("user" + user);
 		
 		if(findUser == null)
 		{

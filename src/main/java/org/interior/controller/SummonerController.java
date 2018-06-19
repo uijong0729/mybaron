@@ -3,6 +3,7 @@ package org.interior.controller;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.NoSuchElementException;
+import java.util.Set;
 
 import org.interior.repository.Api;
 import org.interior.repository.ApiRepository;
@@ -23,6 +24,8 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import net.rithms.riot.api.ApiConfig;
 import net.rithms.riot.api.RiotApi;
 import net.rithms.riot.api.RiotApiException;
+import net.rithms.riot.api.endpoints.match.dto.MatchList;
+import net.rithms.riot.api.endpoints.match.dto.MatchReference;
 import net.rithms.riot.api.endpoints.spectator.dto.CurrentGameInfo;
 import net.rithms.riot.api.endpoints.spectator.dto.CurrentGameParticipant;
 import net.rithms.riot.api.endpoints.summoner.dto.Summoner;
@@ -48,27 +51,27 @@ public class SummonerController {
 	
 	public int cPage = 0;
 	
+	//키를 가져오는 메소드
+	public String getApiKey(){
+		Api getKey = keydao.findById(9435L).get();
+		return getKey.getApi_key();
+	}
 	
 	@GetMapping("/userProfile")
 	public String userProfile(Model model, String user) throws RiotApiException {
 		
+		ApiConfig config;
 		
-		Api getKey = null;
 		try 
 		{
-			//key
-			getKey = keydao.findById(9435L).get();
-			//System.out.println("키 로드 = " + getKey);
+			config = new ApiConfig().setKey(getApiKey());
 		}
 		catch (NoSuchElementException e) 
 		{
-			//e.printStackTrace();
 			return "exception/insertKey";
 		}
 		
-		ApiConfig config = new ApiConfig().setKey(getKey.getApi_key());
 		RiotApi api = new RiotApi(config);
-		
 		
 		//소환사
 		try 
@@ -162,14 +165,7 @@ public class SummonerController {
 		{
 			return "userprofile";
 		}
-				
-		
-		
-		
-		
-		
 		return "userprofile";
-	
 	}//userProfile
 	
 	
@@ -180,6 +176,49 @@ public class SummonerController {
 		//System.out.println("넘어왔다" + currentPage);
 		cPage = currentPage;
 	}
+	
+	
+	//과거 게임 불러오기
+	@ResponseBody
+	@GetMapping(value="/getPastGame")
+	public String getPastGame(Long accountId, int matchPage) {
+		
+		StringBuffer sb = new StringBuffer();
+		
+		ApiConfig config = new ApiConfig().setKey(getApiKey());
+		RiotApi api = new RiotApi(config);
+		try {
+			MatchList ml = api.getMatchListByAccountId(Platform.KR, accountId);
+			
+			List<MatchReference> ml2 = ml.getMatches();
+			
+			for(int i = matchPage ; i < (matchPage + 9) ; i++)
+			{
+				sb.append("<tr>");
+					sb.append("<td><img width='33%' src='http://ddragon.leagueoflegends.com/cdn/"+VersionJson.getVersion()+"/img/champion/" + cdao.findByIndividualKey(ml2.get(i).getChampion()).getFull() + "'></td>");
+					
+					sb.append("<td>매치 큐: " + ml2.get(i).getQueue() + "</td>");
+					
+					sb.append("<td>타임 스탬프: " + ml2.get(i).getTimestamp() + "</td>");
+				sb.append("</tr>");
+			}
+			
+			
+		} catch (RiotApiException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		return sb.toString();
+	}
+	
+	
+	
+	
+	
+	
+	
+	
 	
 	
 }
