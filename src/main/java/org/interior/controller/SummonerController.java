@@ -205,7 +205,7 @@ public class SummonerController {
 		//System.out.println("페이지 = "+ (matchPage*10));
 		//System.out.println("페이지two = "+(matchPage*10+9));
 		StringBuffer sb = new StringBuffer();
-		long start = System.currentTimeMillis(); //시작하는 시점 계산
+		//long start = System.currentTimeMillis(); //시작하는 시점 계산
 		ApiConfig config = new ApiConfig().setKey(getApiKey());
 		RiotApi api = new RiotApi(config);
 		
@@ -312,8 +312,8 @@ public class SummonerController {
 		}
 		
 		
-		long end = System.currentTimeMillis(); //프로그램이 끝나는 시점 계산
-		System.out.println( "실행 시간 : " + ( end - start )/1000.0 +"초"); //실행 시간 계산 및 출력
+		//long end = System.currentTimeMillis(); //프로그램이 끝나는 시점 계산
+		//System.out.println( "실행 시간 : " + ( end - start )/1000.0 +"초"); //실행 시간 계산 및 출력
 
 		
 		return sb.toString();
