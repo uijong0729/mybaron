@@ -203,6 +203,7 @@ public class SummonerController {
 	@GetMapping(value="/getPastGame")
 	public String getPastGame(Long accountId, int matchPage) {
 
+			
 		StringBuffer sb = new StringBuffer();
 		ApiConfig config = new ApiConfig().setKey(getApiKey());
 		RiotApi api = new RiotApi(config);
@@ -214,9 +215,7 @@ public class SummonerController {
 			
 			List<MatchReference> ml2 = ml.getMatches();
 			
-
 			
-			long start = System.currentTimeMillis(); //시작하는 시점 계산
 			for(int i = 0 ; i < 10 ; i++)
 			{
 				//매치 정보
@@ -256,6 +255,10 @@ public class SummonerController {
 					//참가자들
 					sb.append("<td style='width: 40%;'>");
 					
+					
+
+					long start = System.currentTimeMillis(); //시작하는 시점 계산
+					
 					for (int k = 0 ; k < mcAr.size() ; k++) {
 						
 						if(k != 5)
@@ -271,6 +274,11 @@ public class SummonerController {
 						}
 						
 					}
+					
+					long end = System.currentTimeMillis(); //프로그램이 끝나는 시점 계산
+					System.out.println( "실행 시간 : " + ( end - start )/1000.0 +"초"); //실행 시간 계산 및 출력
+					
+					
 					sb.append("<hr></td><td style='width: 20%;'>");
 					sb.append(translation.epochCalculator2(ml2.get(i).getTimestamp()));
 					sb.append("</td>");
@@ -278,8 +286,6 @@ public class SummonerController {
 				sb.append("</tr>");
 			}
 			
-			long end = System.currentTimeMillis(); //프로그램이 끝나는 시점 계산
-			System.out.println( "실행 시간 : " + ( end - start )/1000.0 +"초"); //실행 시간 계산 및 출력
 			
 			
 		} catch (RiotApiException e) {
@@ -291,7 +297,8 @@ public class SummonerController {
 			e.printStackTrace();
 		}
 		
-
+		
+		
 
 		
 		return sb.toString();
