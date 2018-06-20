@@ -26,13 +26,21 @@ public class translation {
 	//epoch시간을 날짜 시간 분으로 환산
 	public static String epochCalculator2(Long time)
 	{
+		StringBuffer sb = new StringBuffer();
 		
 		Instant now = Instant.ofEpochMilli(time);
 		OffsetDateTime gameTime = OffsetDateTime.ofInstant(now, ZoneId.systemDefault()); 
 		
-		String printTime = gameTime.getMonth().getValue() + "월 " + gameTime.getDayOfMonth() + "일 <br>" + gameTime.getHour() + "시  " + mm(gameTime.getMinute()) + "분 ";
+		sb.append(gameTime.getMonth().getValue());
+		sb.append("월 ");
+		sb.append(gameTime.getDayOfMonth());
+		sb.append("일 <br>");
+		sb.append(gameTime.getHour());
+		sb.append("시  ");
+		sb.append(mm(gameTime.getMinute()));
+		sb.append("분 ");
 		
-		return printTime;
+		return sb.toString();
 	}
 	
 	//00처리

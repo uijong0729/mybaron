@@ -51,7 +51,9 @@ public class SummonerController {
 	@Autowired
 	private CommentRepository crdao;
 	
+	//멤버변수
 	public int cPage = 0;
+	public String version = VersionJson.getVersion();
 	
 	//키를 가져오는 메소드
 	public String getApiKey(){
@@ -66,7 +68,7 @@ public class SummonerController {
 		sb.append("<img style='margin: 2%; margin-top: 4%;;' width='");
 		sb.append(size);
 		sb.append("%' src='http://ddragon.leagueoflegends.com/cdn/");
-		sb.append(VersionJson.getVersion());
+		sb.append(version);
 		sb.append("/img/champion/");
 		sb.append(cdao.findByIndividualKey(championCode).getFull());
 		sb.append("'>");
@@ -152,13 +154,13 @@ public class SummonerController {
 						team1.add(lst);
 						spellIcon1.add(sp);
 						
-						champIcon1.add("http://ddragon.leagueoflegends.com/cdn/"+VersionJson.getVersion()+"/img/champion/"+getFull);
+						champIcon1.add("http://ddragon.leagueoflegends.com/cdn/"+version+"/img/champion/"+getFull);
 					}
 					else
 					{
 						team2.add(lst);
 						spellIcon2.add(sp);
-						champIcon2.add("http://ddragon.leagueoflegends.com/cdn/"+VersionJson.getVersion()+"/img/champion/"+getFull);
+						champIcon2.add("http://ddragon.leagueoflegends.com/cdn/"+version+"/img/champion/"+getFull);
 					}
 				}
 				
