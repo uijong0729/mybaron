@@ -3,7 +3,6 @@ package org.interior.controller;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.NoSuchElementException;
-import java.util.Set;
 
 import org.interior.repository.Api;
 import org.interior.repository.ApiRepository;
@@ -28,7 +27,6 @@ import net.rithms.riot.api.endpoints.match.dto.Match;
 import net.rithms.riot.api.endpoints.match.dto.MatchList;
 import net.rithms.riot.api.endpoints.match.dto.MatchReference;
 import net.rithms.riot.api.endpoints.match.dto.Participant;
-import net.rithms.riot.api.endpoints.match.dto.ParticipantIdentity;
 import net.rithms.riot.api.endpoints.match.dto.ParticipantStats;
 import net.rithms.riot.api.endpoints.spectator.dto.CurrentGameInfo;
 import net.rithms.riot.api.endpoints.spectator.dto.CurrentGameParticipant;

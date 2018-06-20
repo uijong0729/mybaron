@@ -6,11 +6,8 @@ import java.time.OffsetDateTime;
 import java.time.ZoneId;
 import java.util.Date;
 
-import org.interior.repository.riotapi.ChampionDatabaseRepository;
-import org.springframework.beans.factory.annotation.Autowired;
 
 import net.rithms.riot.api.RiotApiException;
-import riot.VersionJson;
 
 public class translation {
 	
