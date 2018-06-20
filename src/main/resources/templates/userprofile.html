@@ -7,10 +7,12 @@
      {{> include/link }}
     
     <script type="text/javascript">
+    $('#loading-image').hide();
     
     $(document).ready(function(){
     	$('#popup').hide();
 		$('#mask').hide();
+		$('#loading-image').hide();
 		$('#close').on('click', close);
 		$('#commentWrite').on('click', open);
 		
@@ -51,6 +53,10 @@
     	
     	//과거 게임 불러오기
     	$('#loadPastGame').on('click', function(){
+    		$('#mask').show();
+    		$('#loading-image').show();
+    		$('#loading-image').focus();
+    		
 			var accountId = $('#accountId').val();
 			
     		console.log(accountId);
@@ -63,14 +69,17 @@
     				$('#gameTable').append(result);
     				$('#loadPastGame').html('다음 10개 전적 추가로 가져오기');
     				++matchPage;
+    				$('#mask').hide();
+    	    		$('#loading-image').hide();
     			},
     			error: function()
     			{
     				alert('처리 중입니다 기다려주세요');
+    				$('#mask').hide();
+    	    		$('#loading-image').hide();
     			}
     			
     		});
-    		
     		
     	});
     	
@@ -101,16 +110,25 @@
 		}
 		
 		#mask {  
-			  position:absolute;  
+			  position:fixed;  
 			  left:0;
 			  top:0;
 			 	 width: 100%;
-				height: 150%;
+				height: 380%;
 			  z-index:400;  
 			  background-color: rgba(0, 0, 0, 0.2);  
 			  display:none;  
 			}
 			
+		#loading-image {  
+			position: fixed;
+			 top: 20%;  
+			 left: 20%; 
+			 z-index: 401; 
+		
+		}
+
+
 		.page-item{
 			cursor: pointer;
 		}
@@ -309,7 +327,11 @@
 	<div id="mask">
 	
 	</div>
-
+	
+		<div id="loading-image" style="text-align: center;">
+			<img style="display: inline-block; " src="/img/loading.gif" alt="Loading..." />
+			<p style="text-align: center; font-size: 30pt; color: white;"> 로딩 중 입니다 ... </p>
+		</div>
 <br><br><br><br><br><br><br><br><br><br><br><br>
 </body>
 </html>

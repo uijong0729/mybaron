@@ -202,34 +202,52 @@ public class SummonerController {
 	@ResponseBody
 	@GetMapping(value="/getPastGame")
 	public String getPastGame(Long accountId, int matchPage) {
-
-			
+		//System.out.println("페이지 = "+ (matchPage*10));
+		//System.out.println("페이지two = "+(matchPage*10+9));
 		StringBuffer sb = new StringBuffer();
+		long start = System.currentTimeMillis(); //시작하는 시점 계산
 		ApiConfig config = new ApiConfig().setKey(getApiKey());
 		RiotApi api = new RiotApi(config);
 		
 		try {
 			//MatchList ml = api.getMatchListByAccountId(Platform.KR, accountId);
-			
-			MatchList ml = api.getMatchListByAccountId(Platform.KR, accountId, null, null, null, -1, -1, matchPage*10, (matchPage*10)+10);
+			MatchList ml = api.getMatchListByAccountId(Platform.KR, accountId, null, null, null, -1, -1, matchPage*10, (matchPage*10)+9);
+			//System.out.println("mlstart = " + ml.getStartIndex());
+			//System.out.println("mlend = " + ml.getEndIndex());
 			
 			List<MatchReference> ml2 = ml.getMatches();
 			
 			
-			for(int i = 0 ; i < 10 ; i++)
+			//System.out.println("ml2.size = " + ml2.size());
+			for(int i = 0 ; i < ml2.size() ; i++)
 			{
 				//매치 정보
 				Match mcInfo = api.getMatch(Platform.KR, ml2.get(i).getGameId());
-				System.out.println(mcInfo.getGameId());
+				//System.out.println(mcInfo.getGameId());
+				
 				//매치 참가자
 				List<Participant> mcAr = mcInfo.getParticipants();
-				
+		
 				//매치 참자가의 플레이어 정보
 				//List<ParticipantIdentity> mcPlayer = mcInfo.getParticipantIdentities();
 				//System.out.println(mcPlayer.get(0).getPlayer().getSummonerName());
 				
+				int itsMe = 0;
+				
+				//매치 참가자 중 누가 푸르밀인가?
+				for(int b = 0 ; b < mcAr.size() ; b++)
+				{
+					if(mcInfo.getParticipantIdentities().get(b).getPlayer().getAccountId() == accountId)
+					{
+						itsMe = b;
+						break;
+					}
+				}
+				
+				//System.out.println(mcPlayer.get(itsMe).getPlayer().getSummonerName());
+				
 				//매치 참가자의 인게임 활약
-				ParticipantStats pStat = mcAr.get(i).getStats();
+				ParticipantStats pStat = mcAr.get(itsMe).getStats(); 
 
 				sb.append("<tr style='background-color: #f8f9fa; padding: 3px; margin-top: 5px; border: 1px thick white;'>");
 					
@@ -249,15 +267,12 @@ public class SummonerController {
 					sb.append("<td style='width: 20%; text-align: center;'>");
 					sb.append(translation.gameMode(mcInfo.getGameMode()));
 					sb.append("<br>");
-					sb.append(translation.isWinToString(mcAr.get(i).getStats().isWin()));
+					sb.append(translation.isWinToString(pStat.isWin()));
 					sb.append("</td>");
 					
 					//참가자들
 					sb.append("<td style='width: 40%;'>");
 					
-					
-
-					long start = System.currentTimeMillis(); //시작하는 시점 계산
 					
 					for (int k = 0 ; k < mcAr.size() ; k++) {
 						
@@ -275,8 +290,7 @@ public class SummonerController {
 						
 					}
 					
-					long end = System.currentTimeMillis(); //프로그램이 끝나는 시점 계산
-					System.out.println( "실행 시간 : " + ( end - start )/1000.0 +"초"); //실행 시간 계산 및 출력
+					
 					
 					
 					sb.append("<hr></td><td style='width: 20%;'>");
@@ -298,7 +312,8 @@ public class SummonerController {
 		}
 		
 		
-		
+		long end = System.currentTimeMillis(); //프로그램이 끝나는 시점 계산
+		System.out.println( "실행 시간 : " + ( end - start )/1000.0 +"초"); //실행 시간 계산 및 출력
 
 		
 		return sb.toString();
