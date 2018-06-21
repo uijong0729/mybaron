@@ -27,6 +27,7 @@ import net.rithms.riot.api.endpoints.match.dto.Match;
 import net.rithms.riot.api.endpoints.match.dto.MatchList;
 import net.rithms.riot.api.endpoints.match.dto.MatchReference;
 import net.rithms.riot.api.endpoints.match.dto.Participant;
+import net.rithms.riot.api.endpoints.match.dto.ParticipantIdentity;
 import net.rithms.riot.api.endpoints.match.dto.ParticipantStats;
 import net.rithms.riot.api.endpoints.spectator.dto.CurrentGameInfo;
 import net.rithms.riot.api.endpoints.spectator.dto.CurrentGameParticipant;
@@ -54,6 +55,7 @@ public class SummonerController {
 	//멤버변수
 	public int cPage = 0;
 	public String version = VersionJson.getVersion();
+	public Long getStartTime = 0L;
 	
 	//키를 가져오는 메소드
 	public String getApiKey(){
@@ -76,7 +78,32 @@ public class SummonerController {
 		return sb.toString();
 	}
 	
+	//챔피언 아이콘 + 캡션
+	public String getChampImg(int size, int championCode, String caption) throws RiotApiException{
+		StringBuffer sb = new StringBuffer();
+		
+		sb.append("<figure style='text-align: center; display: inline-block; width: 19%;'>");
+		sb.append("<img style='margin: 2%; margin-top: 4%;;' width='");
+		sb.append(size);
+		sb.append("%' src='http://ddragon.leagueoflegends.com/cdn/");
+		sb.append(version);
+		sb.append("/img/champion/");
+		sb.append(cdao.findByIndividualKey(championCode).getFull());
+		sb.append("'>");
+		sb.append("<figcaption style='text-align: center; display: block;'>");
+		sb.append("<a href='userProfile?user=");
+		sb.append(caption);
+		sb.append("'>");
+		sb.append(caption);
+		sb.append("</a>");
+		sb.append("</figcaption>");
+		sb.append("</figure>");
+		
+		return sb.toString();
+	}
 	
+	
+	//검색시 매핑
 	@GetMapping("/userProfile")
 	public String userProfile(Model model, String user) throws RiotApiException {
 		
@@ -172,6 +199,11 @@ public class SummonerController {
 				model.addAttribute("gameInfo_Spell2", spellIcon2);
 				model.addAttribute("gameInfo_Champ1", champIcon1);
 				model.addAttribute("gameInfo_Champ2", champIcon2);
+				
+				//현재시간 삽입
+				getStartTime = activity.getGameStartTime();
+				
+				//model.addAttribute("startTime", activity.getGameStartTime());
 			}
 			catch(Exception e)
 			{
@@ -202,8 +234,6 @@ public class SummonerController {
 	@ResponseBody
 	@GetMapping(value="/getPastGame")
 	public String getPastGame(Long accountId, int matchPage) {
-		//System.out.println("페이지 = "+ (matchPage*10));
-		//System.out.println("페이지two = "+(matchPage*10+9));
 		StringBuffer sb = new StringBuffer();
 		//long start = System.currentTimeMillis(); //시작하는 시점 계산
 		ApiConfig config = new ApiConfig().setKey(getApiKey());
@@ -212,24 +242,19 @@ public class SummonerController {
 		try {
 			//MatchList ml = api.getMatchListByAccountId(Platform.KR, accountId);
 			MatchList ml = api.getMatchListByAccountId(Platform.KR, accountId, null, null, null, -1, -1, matchPage*10, (matchPage*10)+9);
-			//System.out.println("mlstart = " + ml.getStartIndex());
-			//System.out.println("mlend = " + ml.getEndIndex());
 			
 			List<MatchReference> ml2 = ml.getMatches();
 			
-			
-			//System.out.println("ml2.size = " + ml2.size());
 			for(int i = 0 ; i < ml2.size() ; i++)
 			{
 				//매치 정보
 				Match mcInfo = api.getMatch(Platform.KR, ml2.get(i).getGameId());
-				//System.out.println(mcInfo.getGameId());
 				
 				//매치 참가자
 				List<Participant> mcAr = mcInfo.getParticipants();
 		
 				//매치 참자가의 플레이어 정보
-				//List<ParticipantIdentity> mcPlayer = mcInfo.getParticipantIdentities();
+				List<ParticipantIdentity> mcPlayer = mcInfo.getParticipantIdentities();
 				//System.out.println(mcPlayer.get(0).getPlayer().getSummonerName());
 				
 				int itsMe = 0;
@@ -248,9 +273,19 @@ public class SummonerController {
 				
 				//매치 참가자의 인게임 활약
 				ParticipantStats pStat = mcAr.get(itsMe).getStats(); 
-
-				sb.append("<tr style='background-color: #f8f9fa; padding: 3px; margin-top: 5px; border: 1px thick white;'>");
-					
+				boolean isWin = pStat.isWin();
+				
+				
+				if(isWin)
+				{
+					sb.append("<tr style='background-color: #e0ffff; padding: 3px; margin-top: 5px;'>");
+				}
+				else
+				{
+					sb.append("<tr style='background-color: #f8f9fa; padding: 3px; margin-top: 5px;'>");
+				}
+				
+				
 					//챔피언 아이콘
 					sb.append("<td style='width: 10%;'>");
 					sb.append(getChampImg(80, ml2.get(i).getChampion()));
@@ -267,33 +302,31 @@ public class SummonerController {
 					sb.append("<td style='width: 20%; text-align: center;'>");
 					sb.append(translation.gameMode(mcInfo.getGameMode()));
 					sb.append("<br>");
-					sb.append(translation.isWinToString(pStat.isWin()));
+					sb.append(translation.isWinToString(isWin));
 					sb.append("</td>");
 					
 					//참가자들
-					sb.append("<td style='width: 40%;'>");
+					sb.append("<td style='width: 45%;'>");
 					
 					
 					for (int k = 0 ; k < mcAr.size() ; k++) {
 						
 						if(k != 5)
 						{
-							sb.append(getChampImg(8, mcAr.get(k).getChampionId()));
+							sb.append(getChampImg(40, mcAr.get(k).getChampionId(), mcPlayer.get(k).getPlayer().getSummonerName()));
 							sb.append(" ");
 						}
 						else
 						{
-							sb.append("<br>");
-							sb.append(getChampImg(8, mcAr.get(k).getChampionId()));
+							sb.append("<hr>");
+							sb.append(getChampImg(40, mcAr.get(k).getChampionId(), mcPlayer.get(k).getPlayer().getSummonerName()));
 							sb.append(" ");
 						}
 						
 					}
 					
 					
-					
-					
-					sb.append("<hr></td><td style='width: 20%;'>");
+					sb.append("<hr style='border: 2px solid gray;'></td><td style='width: 15%; text-align: center;'>");
 					sb.append(translation.epochCalculator2(ml2.get(i).getTimestamp()));
 					sb.append("</td>");
 					
@@ -320,7 +353,14 @@ public class SummonerController {
 	}
 	
 	
-	
+	@ResponseBody
+	@GetMapping(value="/init")
+	public Long init() {
+		
+		Long init = getStartTime;
+		
+		return init;
+	}
 	
 	
 	

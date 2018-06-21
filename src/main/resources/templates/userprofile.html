@@ -6,16 +6,39 @@
 <title>My baron</title>
      {{> include/link }}
     
+    <script src="/js/timer.js" type="text/javascript"></script>
+    
     <script type="text/javascript">
     $('#loading-image').hide();
+    var date = new Date();
     
     $(document).ready(function(){
     	$('#popup').hide();
 		$('#mask').hide();
+		$('#currentTimerInfo').hide();
 		$('#loading-image').hide();
 		$('#close').on('click', close);
 		$('#commentWrite').on('click', open);
 		
+		$.ajax({
+			url: '/init',
+			type: 'get',
+			dataType: 'text',
+			success: function(result){
+				if($('#mode').html() != "게임 중인 경우만 정보가 표시됩니다.")
+				{	
+					$('#currentTimerInfo').show();
+					var sTime = result;
+					var cTime = date.getTime();
+					var i = 0;
+					var playAlert = setInterval(function() {
+						cTime = cTime + 1000;
+						$('#currentTimer').html(sibuncho(cTime, sTime));
+					}, 1000);
+				}
+			}
+		});
+	
 		//코멘트 등록
     	$('#goWrite').on('click', function(){
     		var formData = $('#commentForm').serialize();
@@ -170,8 +193,7 @@
 		  	<div class='col-sm-6'>
 				<table class="table">
 						<tr scope="col">
-							<th></th>
-							<th style="text-align: left;"><h4>유저 코멘트</h4></th>
+							<th style="text-align: center;"><h4>유저 코멘트</h4></th>
 						</tr>
 					
 					{{#commentList}}
@@ -216,16 +238,15 @@
 		 		<!-- 아이콘 -->
 		</div>
 		
-		<div class="col-xs-3">	
-			{{ #gameInfo_Time }}
-					{{.}}
-			{{ /gameInfo_Time }}
-			<br>
-	
-			{{ #gameInfo_Mode }}
-					{{.}}
-			{{ /gameInfo_Mode }}
+		<div class="col-xs-8 row" style="text-align: center;">	
+			<ul style="list-style: none; margin: 0px; padding: 0px;">
+				<li class="btn btn-default" id="startTime">{{ #gameInfo_Time }}{{.}}{{ /gameInfo_Time }}</li>
+				<li class="btn btn-default" id="mode">{{ #gameInfo_Mode }}{{.}}{{ /gameInfo_Mode }}</li>
+				<li id="currentTimerInfo" class="btn btn-default">진행 시간 : <span style="display: inline-block;" id="currentTimer"></span></li>
+			</ul>
+
   		</div>
+
  	</div>
   
   
