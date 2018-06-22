@@ -34,7 +34,7 @@ http://taycaldwell.com/riot-api-java/doc/
   					
   				}
   				
-  				$("#showChatting").append("<tr class='"+chatCounter+"'><td style='width: 30%;'>" + $('#nickname').val() + " : </td><td style='width: 70%;'>" + JSON.parse(chat.body).content + "</td></tr>");
+  				$("#showChatting").append("<tr class='"+chatCounter+"'><td style='width: 30%;'>" + JSON.parse(chat.body).nickname + " : </td><td style='width: 70%;'>" + JSON.parse(chat.body).content + "</td></tr>");
   				console.log(chatCounter);
   			});
   		});
@@ -43,7 +43,7 @@ http://taycaldwell.com/riot-api-java/doc/
   		function sendString() {
   			
   			// send(path, header, message)로 메시지를 보낼 수 있다.
-  		    stompClient.send("/publish/insertLog", {}, JSON.stringify({'msg': $("#content").val()}));
+  		    stompClient.send("/publish/insertLog", {}, JSON.stringify({'msg': $("#content").val(), 'nick': $('#nick').val()}));
   		}
   		
   		
@@ -80,7 +80,7 @@ http://taycaldwell.com/riot-api-java/doc/
                     <input type="text" id="content" class="form-control" style="width: 90%;">
                 </div>
                 <button id="send" class="btn btn-default" type="submit">Send</button>
-                <input id="nickname" type="hidden" value="{{ name }}">
+                <input id="nick" type="hidden" value="{{ name }}">
             </form>
     
     

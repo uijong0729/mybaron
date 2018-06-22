@@ -11,8 +11,8 @@ import lombok.Setter;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-public class Chatlog {
+public class Nickname {
 
-    private String content;
-    private String nickname;
+    private String nick;
+
 }
