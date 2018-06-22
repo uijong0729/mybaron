@@ -6,6 +6,7 @@
 	    
     <script>
    	
+    var hide = true;
     
     $(document).ready(function(){
     	//로그인폼 숨기기
@@ -14,15 +15,17 @@
     	//로그인 폼 닫기
     	$('#cancle').on('click', function(){
     		$('#loadLoginForm').hide('slow');
+    		hide = true;
     	});
     	
     	//로그인 폼 열기
     	$('#login').on('click', function(){
     		$('#loadLoginForm').toggle('slow');
+    		hide = false;
     	});
     	
     	//로그인 요청
-    	$('#submit').on('click', loginRequest);
+    	$('#gologin').on('click', loginRequest);
     	
     	//로그아웃 요청
     	$('#logout').on('click', logoutRequest);
@@ -75,9 +78,14 @@
     
     //엔터 키
     function enterkey() {
-        if (window.event.keyCode == 13) {
-        	loginRequest();
-        }
+    	
+    	if(hide == false)
+    	{
+    		 if (window.event.keyCode == 13) {
+    	        	loginRequest();
+    	     }
+    	}
+       
 	}
 
 
@@ -129,10 +137,10 @@
 					<td></td>
 				
 					<td colspan="1">
-						<button id="remember" type="button" class="btn btn-primary">자동 로그인</button>
+					<!-- 	<button id="remember" type="button" class="btn btn-primary">자동 로그인</button> -->
 						
 						
-						<button type="button" class='btn btn-success' id='submit'>일반 로그인</button>
+						<button type="button" class='btn btn-success' type="button" id='gologin'>로그인</button>
 						<button type="button" class='btn' id='cancle'>취소</button>
 					</td>
 				</tr>

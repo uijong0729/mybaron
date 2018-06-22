@@ -13,15 +13,89 @@ http://taycaldwell.com/riot-api-java/doc/
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>My Baron</title>
      {{> include/link }}
-  
+  	 <script src="/webjars/sockjs-client/sockjs.min.js"></script>
+    <script src="/webjars/stomp-websocket/stomp.min.js"></script>
+    
+  	<script type="text/javascript">
+  	
+  	var socket = new SockJS('/chattingLog');
+  	var stompClient = Stomp.over(socket);
+	var chatCounter = 0;
+
+  		stompClient.connect({}, function (frame) {
+  			
+  			// Subscribe(path, callback)로 메시지를 받을 수 있다. callback 첫번째 파라미터의 body로 메시지의 내용이 들어온다.
+  			stompClient.subscribe('/subscribe/readLog', function (chat) {
+  				chatCounter++;
+  				
+  				if(chatCounter >= 9)
+  				{
+  					$('.' + (chatCounter - 8)).remove();
+  					
+  				}
+  				
+  				$("#showChatting").append("<tr class='"+chatCounter+"'><td style='width: 30%;'>" + $('#nickname').val() + " : </td><td style='width: 70%;'>" + JSON.parse(chat.body).content + "</td></tr>");
+  				console.log(chatCounter);
+  			});
+  		});
+  		
+  		
+  		function sendString() {
+  			
+  			// send(path, header, message)로 메시지를 보낼 수 있다.
+  		    stompClient.send("/publish/insertLog", {}, JSON.stringify({'msg': $("#content").val()}));
+  		}
+  		
+  		
+  		$(function () {
+  		    $('.form').on('submit', function (e) {
+  		    	
+  		    	e.preventDefault();
+  		    });
+  		    
+  		    $( "#send" ).click(function() { 
+  		    	sendString(); 
+  		    	$('#content').val('');
+  		    });
+  		    
+  		});
+  	
+  	
+  	</script>
     
   </head>
   <body class="container-fluid">
   	
-  	{{> include/header }}
-		
-		
-		
 
+	{{> include/header }}
+	
+	
+	
+	
+	{{# user }}	
+	<div class="container" style="border: 1px solid gray;">
+            <form class="form form-inline">
+                <div class="form-group" style="width: 70%;">
+                    <label for="name">실시간 채팅</label>
+                    <input type="text" id="content" class="form-control" style="width: 90%;">
+                </div>
+                <button id="send" class="btn btn-default" type="submit">Send</button>
+                <input id="nickname" type="hidden" value="{{ name }}">
+            </form>
+    
+    
+		    <div class="row" style="margin-top: 2%;">
+		        <div class="col-md-12">
+		            <table id="conversation" class="table table-striped">
+		                <tbody id="showChatting">
+		                	
+		                	<!-- 채팅으로 이곳에 tr이 삽입된단다. -->
+		                	
+		                </tbody>
+		            </table>
+		        </div>
+		    </div>
+	</div>	
+	{{/ user }}	
   </body>
 </html>

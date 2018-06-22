@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>웹소캣 채팅</title>
+    <link href="/webjars/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+    <script src="/webjars/jquery/jquery.min.js"></script>
+    <script src="/webjars/sockjs-client/sockjs.min.js"></script>
+    <script src="/webjars/stomp-websocket/stomp.min.js"></script>
+</head>
+
+<script type="text/javascript">
+
+var socket = new SockJS('/chattingLog');
+var stompClient = Stomp.over(socket);
+
+
+	stompClient.connect({}, function (frame) {
+		
+		// Subscribe(path, callback)로 메시지를 받을 수 있다. callback 첫번째 파라미터의 body로 메시지의 내용이 들어온다.
+		stompClient.subscribe('/subscribe/readLog', function (chat) {
+			//alert(chat);
+			$("#showChatting").append("<tr><td>" + JSON.parse(chat.body).content + "</td></tr>");
+		
+		});
+	});
+	
+	
+	function sendString() {
+		
+		// send(path, header, message)로 메시지를 보낼 수 있다.
+	    stompClient.send("/publish/insertLog", {}, JSON.stringify({'msg': $("#content").val()}));
+	}
+	
+	
+	$(function () {
+	    $("form").on('submit', function (e) {
+	    	
+	    	e.preventDefault();
+	    });
+	    
+	    $( "#send" ).click(function() { 
+	    	sendString(); 
+	    	$('#content').val('');
+	    });
+	    
+	});
+
+</script>
+
+
+<body>
+
+	<div class="container" style="border: 1px solid gray;">
+            <form class="form-inline">
+                <div class="form-group">
+                    <label for="name">실시간 채팅</label>
+                    <input type="text" id="content" class="form-control">
+                </div>
+                <button id="send" class="btn btn-default" type="submit">Send</button>
+            </form>
+    
+    
+		    <div class="row">
+		        <div class="col-md-12">
+		            <table id="conversation" class="table table-striped">
+		                <tbody id="showChatting">
+		                	
+		                	<!-- 채팅으로 이곳에 tr이 삽입된단다. -->
+		                	
+		                </tbody>
+		            </table>
+		        </div>
+		    </div>
+	</div>
+
+</body>
+</html>
