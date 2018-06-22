@@ -5,34 +5,155 @@
 <title>방명록</title>
 <script src="/webjars/jquery/3.2.1/jquery.min.js"></script>
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+<link rel="stylesheet" href="/css/commentForm.css?ver=1">
 <script src="/webjars/bootstrap/4.1.0/js/bootstrap.min.js"></script>
 <script charset="utf-8" src="https://ucarecdn.com/libs/widget/3.3.0/uploadcare.full.min.js"></script>
+<script>UPLOADCARE_PUBLIC_KEY = 'f03b921c1f12931bacc3';</script>
 <script type="text/javascript">
+	$(document).ready(function(){
+		var writer = $('#writer').val();
+		$('#popup').hide();
+		$('#mask').hide();
+		$('#close').on('click', close);
+		
+		$('#reqUpdate').hide();
+		$('#reqDelete').hide();
+		
+		$.ajax({
+			url: '/readBoardInit',
+			data: {writer: writer},
+			type: 'post',
+			dataType: 'text',
+			success: function(result){
+				if(result == "ok")
+				{
+					//alert('ok');
+					$('#reqUpdate').show();
+					$('#reqDelete').show();
+				}
+			}
+		});
+		
+		$('#reqUpdate').on('click', function(){
+			
+			if(confirm('게시물을 수정하시겠습니까?'))
+			{
+				$('#popup').show('slow');
+				$('#mask').show();
+				$('#goWrite').on('click', function(){
+					var formData = $("#writeform").serialize();
+					$.ajax({
+						url: '/updateVisitor',
+						type: 'post',
+						data: formData,
+						success: function(){
+							alert('수정 되었습니다')
+							location.reload();
+						},
+						error: function(){
+							alert('로그인 정보를 확인해주세요');
+						}
+					});
+				});
+				
+			}
+			
+		});
+		$('#reqDelete').on('click', function(){
+			
+			if(confirm('게시물을 삭제하시겠습니까?'))
+			{
+				location.href="deleteVisitor?num=" + $('#num').val() + "&writer=" + $('#writer').val(); 
+			}
+			
+		});
+		
+		
+		function close(){
+			$('#popup').hide('slow');
+			$('#mask').hide();
+		}
+	});
 
 </script>
 </head>
 
 <body>
 {{> include/header }}
-	<div style="margin-left: 20%; margin-right: 20%;">
-		<div id="popup" class="table-responsive">
+	<div style="margin-left: 15%; margin-right: 15%;">
+		<div id="read" class="table-responsive">
 		{{# board }}
 			  <div class="panel panel-default">
 			  	<div class="panel-heading ">
 			  	 {{ title }}
 			  	</div>
 			    <div class="panel-body">
-				    <p>{{content}}</p>
+				   {{content}}
 				</div>
 				<div>
-					  <img src="{{image}}"/>
+					  <img width="80%" src="{{image}}"/>
 				</div>
 			  </div>
 			<div style="text-align: center;">
 				<button class="btn btn-danger btn-lg" onclick="javascript: history.go(-1);" type="button">뒤로</button>
+				
+				<button id="reqUpdate" class="btn btn-info btn-lg">수정</button>
+				<button id="reqDelete" class="btn btn-info btn-lg" type="button">삭제</button>
+			
 			</div>
+			
+			<input type="hidden" value="{{ writer }}" name="writer" id="writer">
+			<input type="hidden" value="{{ num }}" id="num" name="num">
+			
 		{{/ board }}
 		</div>
 	</div>
+	
+		<!-- hide부분 -->
+		
+		{{# board }}
+			<div id="popup" class="table-responsive">
+			<form id="writeform">
+				<table class="table">
+					<tr>
+						<th></th>
+						<th class="active" style="text-align: center;">방명록 수정하기</th>
+					</tr>
+					<tr>
+						<th class="active">제목</th>
+						<td><input name="title" type="text" class="form-control" value="{{title}}"></td>
+					</tr>
+					<tr>
+						<th class="active">글 내용</th>
+						<td><textarea name="content" style="resize: none;" rows="5" cols="60">{{content}}</textarea>
+							 <img width="80%" src="{{image}}"/>
+							
+						</td>
+					</tr>
+
+					<tr>
+						<th class="active">이미지</th>
+						<td><input name="image" type="hidden" role="uploadcare-uploader" name="content" data-public-key="f03b921c1f12931bacc3" data-images-only /></td>
+					</tr>
+					<tr>
+						<th></th>
+						<th style="text-align: center;">
+							<button class="btn btn-default" id="goWrite" type="button">완료</button> <button class="btn btn-default" id="close" type="button">취소</button>
+						</th>
+					</tr>
+				</table>
+				
+				<input name="num" type="hidden" value="{{ num }}">
+				<input name="writer" type="hidden" value="{{ writer }}">
+			</form>
+		</div>
+		{{/ board }}
+	
+	<div id="mask">
+	
+	</div>
+		
+	
+	
 </body>
 </html>

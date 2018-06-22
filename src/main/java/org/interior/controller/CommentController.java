@@ -37,8 +37,20 @@ public class CommentController {
 			User user = (User) session.getAttribute("user");
 			comment.setWriter(user.getName());
 			
-			System.out.println(cdao.save(comment));
+			cdao.save(comment);
 		
+	}
+	
+	@ResponseBody
+	@PostMapping("/deleteUserComment")
+	public void deleteUserComment(Comment comment, HttpSession session) {
+		
+		User login = (User) session.getAttribute("user");
+		
+		if(login.getName().equals(comment.getWriter())) 
+		{
+				cdao.deleteById(comment.getCommentId());
+		}
 	}
 	
 	@GetMapping("/visitor")
@@ -90,7 +102,45 @@ public class CommentController {
 		vdao.save(visit);
 	}
 	
+	@ResponseBody
+	@PostMapping("/readBoardInit")
+	public String readBoardInit(String writer, HttpSession session) {
+		
+		User login = (User) session.getAttribute("user");
+		
+		if(login.getName().equals(writer))
+		{
+			return "ok";
+		}
+		else
+		{
+			return "";
+		}
+		
+	}
 	
+	@GetMapping("/deleteVisitor")
+	public String deleteVisitor(int num, String writer, HttpSession session)
+	{
+		User login = (User) session.getAttribute("user");
+		
+		if(login.getName().equals(writer))
+		{
+			vdao.deleteById(num);
+		}
+		
+		
+		return "redirect:/visitor?nPage=0";
+	}
+	
+	
+	@ResponseBody
+	@PostMapping("/updateVisitor")
+	public void updateVisitor(Visitor visit) {
+		visit.setDate(Utility.currentTime());
+		
+		vdao.save(visit);
+	}
 	
 	
 	

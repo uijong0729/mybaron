@@ -169,7 +169,7 @@
 	  
 	  <div class='row'>
 		  	<div class='col-sm-6'>
-				<h3 class="display-3">{{#summoner}} {{ #name }} {{.}} {{ /name }} (Lv. {{ #summonerLevel }}{{.}}{{ /summonerLevel }})  {{/summoner}}</h3>
+				<h3 class="display-3" style="margin-left: 4%;">{{#summoner}} {{ #name }} {{.}} {{ /name }} (Lv. {{ #summonerLevel }}{{.}}{{ /summonerLevel }})  {{/summoner}}</h3>
 			    
 				    <p class="lead">{{ #profileIconId }}
 					    
@@ -193,16 +193,22 @@
 		  	<div class='col-sm-6'>
 				<table class="table">
 						<tr scope="col">
-							<th style="text-align: center;"><h4>코멘트</h4></th>
+							<th colspan="2" style="text-align: center;"><h4>코멘트</h4></th>
 						</tr>
 					
 					{{#commentList}}
 						<tr>
-							<td scope="col" style="color: blue; width: 20%;">
-								{{writer}}
+							<td scope="col" style="color: blue; width: 18%;">
+								<input class="commentId" type="hidden" value="commentId">
+								<span id="writer">{{writer}}</span>
 							</td>
-							<td scope="col" style="width: 80%;">
+							<td scope="col" style="width: 75%;">
 								{{context}}
+							</td>
+							<td style="width: 4%;">
+								<button type="button" class="deleteComment close" aria-label="Close">
+								  <span aria-hidden="true">&times;</span>
+								</button>
 							</td>
 						</tr>
 					{{/commentList}}

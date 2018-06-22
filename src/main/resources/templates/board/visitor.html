@@ -5,7 +5,12 @@
 <title>방명록</title>
     <script src="/webjars/jquery/3.2.1/jquery.min.js"></script>
 	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+	<link rel="stylesheet" href="/css/commentForm.css?ver=1">
 	<script src="/webjars/bootstrap/4.1.0/js/bootstrap.min.js"></script>
+	<script src="https://ucarecdn.com/libs/widget/3.3.0/uploadcare.full.min.js" charset="utf-8"></script>
+	<script>
+	UPLOADCARE_PUBLIC_KEY = 'f03b921c1f12931bacc3';
+	</script>
 
 
 <style type="text/css">
@@ -31,29 +36,8 @@
 		text-align: center
 	}
 	
-	#popup{
-		position:absolute;
-		left:30%;
-		top:40%;
-		background: rgba(255, 255, 200, 0.9); 
-		border-radius: 10px;
-		text-align: center;
-		z-index: 1000;
-	}
-	
-	#mask {  
-		  position:absolute;  
-		  left:0;
-		  top:0;
-		 	 width: 100%;
-			height: 150%;
-		  z-index:400;  
-		  background-color: rgba(0, 0, 0, 0.2);  
-		  display:none;  
-		}
 
 </style>
-<script charset="utf-8" src="https://ucarecdn.com/libs/widget/3.3.0/uploadcare.full.min.js"></script>
 <script type="text/javascript">
  	
 	$(document).ready(function(){
@@ -110,7 +94,7 @@
 				{{# visitor }}
 					<tr>
 						<td>{{ num }}</td>
-						<td><a href="readVisitor?num={{ num }}">{{ title }}</a></td>
+						<td><a href="readVisitor?num={{ num }}">{{ title }} <img width="5%" src="{{image}}"/> </a></td>
 						<td>{{ writer }}</td>
 						<td>{{ date }}</td>
 					</tr>
