@@ -9,7 +9,7 @@ import org.interior.repository.ApiRepository;
 import org.interior.repository.Comment;
 import org.interior.repository.CommentRepository;
 import org.interior.repository.riotapi.ChampionDatabaseRepository;
-import org.interior.util.translation;
+import org.interior.util.Utility;
 import org.interior.vo.SummonerSpell;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -91,7 +91,7 @@ public class SummonerController {
 		sb.append(cdao.findByIndividualKey(championCode).getFull());
 		sb.append("'>");
 		sb.append("<figcaption style='text-align: center; display: block;'>");
-		sb.append("<a href='userProfile?user=");
+		sb.append("<a target='_blank' href='userProfile?user=");
 		sb.append(caption);
 		sb.append("'>");
 		sb.append(caption);
@@ -128,7 +128,7 @@ public class SummonerController {
 			{
 				summoner = api.getSummonerByName(Platform.KR, user);
 				model.addAttribute("summoner", summoner);
-				model.addAttribute("iconImg", translation.getIconCode(summoner.getProfileIconId()));
+				model.addAttribute("iconImg", Utility.getIconCode(summoner.getProfileIconId()));
 				
 				//코멘트 불러오기
 				PageRequest page = PageRequest.of(cPage, 5, Direction.DESC, "commentId");
@@ -161,8 +161,8 @@ public class SummonerController {
 				//게임
 				CurrentGameInfo activity = api.getActiveGameBySummoner(Platform.KR, summoner.getId());
 				
-				String printTime = translation.epochCalculator(activity.getGameStartTime());
-				String gameMode = translation.gameMode(activity.getGameMode());
+				String printTime = Utility.epochCalculator(activity.getGameStartTime());
+				String gameMode = Utility.gameMode(activity.getGameMode());
 				List<CurrentGameParticipant> list = activity.getParticipants();
 				List<CurrentGameParticipant> team1 = new ArrayList<CurrentGameParticipant>();
 				List<CurrentGameParticipant> team2 = new ArrayList<CurrentGameParticipant>();
@@ -173,7 +173,7 @@ public class SummonerController {
 				
 				for (CurrentGameParticipant lst : list) {
 					
-					SummonerSpell sp = new SummonerSpell(translation.getSpellImg(lst.getSpell1Id()), translation.getSpellImg(lst.getSpell2Id()));
+					SummonerSpell sp = new SummonerSpell(Utility.getSpellImg(lst.getSpell1Id()), Utility.getSpellImg(lst.getSpell2Id()));
 					String getFull = cdao.findByIndividualKey(lst.getChampionId()).getFull();
 					
 					if(lst.getTeamId() == 100)
@@ -257,6 +257,7 @@ public class SummonerController {
 				List<ParticipantIdentity> mcPlayer = mcInfo.getParticipantIdentities();
 				//System.out.println(mcPlayer.get(0).getPlayer().getSummonerName());
 				
+				//매치 참가자의 index
 				int itsMe = 0;
 				
 				//매치 참가자 중 누가 푸르밀인가?
@@ -292,27 +293,28 @@ public class SummonerController {
 					sb.append("</td>");
 					
 					//KDA
-					sb.append("<td style='width: 10%; text-align: center;'>");
-					sb.append(translation.kdaFormMaker(pStat.getKills(), pStat.getDeaths(), pStat.getAssists()));
+					sb.append("<td style='width: 8%; text-align: center;'>");
+					sb.append(Utility.kdaFormMaker(pStat.getKills(), pStat.getDeaths(), pStat.getAssists()));
 					sb.append("<br><span style='padding: 4%; margin: 3%; border-radius: 3px; border: 1px solid gray; background-color: blue; color: white;'>");
-					sb.append(translation.kdaCal(pStat.getKills(), pStat.getDeaths(), pStat.getAssists()));
+					sb.append(Utility.kdaCal(pStat.getKills(), pStat.getDeaths(), pStat.getAssists()));
 					sb.append("</span></td>");
 					
 					//게임 모드
-					sb.append("<td style='width: 20%; text-align: center;'>");
-					sb.append(translation.gameMode(mcInfo.getGameMode()));
+					sb.append("<td style='width: 12%; text-align: center;'>");
+					sb.append(Utility.gameMode(mcInfo.getGameMode()));
 					sb.append("<br>");
-					sb.append(translation.isWinToString(isWin));
+					sb.append(Utility.isWinToString(isWin));
 					sb.append("</td>");
 					
 					//참가자들
-					sb.append("<td style='width: 45%;'>");
+					sb.append("<td style='width: 54%;'>");
 					
 					
 					for (int k = 0 ; k < mcAr.size() ; k++) {
 						
 						if(k != 5)
 						{
+							//getChampImg(이미지크기, 챔피언ID, 소환사이름)
 							sb.append(getChampImg(40, mcAr.get(k).getChampionId(), mcPlayer.get(k).getPlayer().getSummonerName()));
 							sb.append(" ");
 						}
@@ -327,7 +329,7 @@ public class SummonerController {
 					
 					
 					sb.append("<hr style='border: 2px solid gray;'></td><td style='width: 15%; text-align: center;'>");
-					sb.append(translation.epochCalculator2(ml2.get(i).getTimestamp()));
+					sb.append(Utility.epochCalculator2(ml2.get(i).getTimestamp()));
 					sb.append("</td>");
 					
 				sb.append("</tr>");

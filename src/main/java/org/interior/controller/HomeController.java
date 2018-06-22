@@ -2,6 +2,7 @@ package org.interior.controller;
 
 import org.interior.repository.User;
 import org.interior.repository.UserRepository;
+import org.interior.util.Security;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -19,6 +20,9 @@ public class HomeController {
 	
 	@PostMapping("/insertUser")
 	public String insertUser(User user) {
+		
+		String pass = Security.encSHA256(user.getPassword());
+		user.setPassword(pass);
 		
 		userDAO.save(user);
 		

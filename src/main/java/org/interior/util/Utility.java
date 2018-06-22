@@ -9,18 +9,25 @@ import java.util.Date;
 
 import net.rithms.riot.api.RiotApiException;
 
-public class translation {
+public class Utility {
 	
 	
 	//epoch시간을 시 분 초로 리턴함
 	public static String epochCalculator(Long time)
 	{
+		StringBuffer sb = new StringBuffer();
+		
 		Instant now = Instant.ofEpochMilli(time);
 		OffsetDateTime gameTime = OffsetDateTime.ofInstant(now, ZoneId.systemDefault()); 
 		
-		String printTime = gameTime.getHour() + "시 " + mm(gameTime.getMinute()) + "분 " + mm(gameTime.getSecond()) + "초";
+		sb.append(gameTime.getHour());
+		sb.append("시 ");
+		sb.append(mm(gameTime.getMinute()));
+		sb.append("분 ");
+		sb.append(mm(gameTime.getSecond()));
+		sb.append("초");
 		
-		return printTime;
+		return sb.toString();
 	}
 	
 	//epoch시간을 날짜 시간 분으로 환산
@@ -157,7 +164,7 @@ public class translation {
 			}
 			else
 			{
-				return "아무것도 못함";
+				return "잉여로웠다";
 			}
 		}
 		else

@@ -10,7 +10,7 @@ import org.interior.repository.CommentRepository;
 import org.interior.repository.User;
 import org.interior.repository.Visitor;
 import org.interior.repository.VisitorRepository;
-import org.interior.util.translation;
+import org.interior.util.Utility;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -85,7 +85,7 @@ public class CommentController {
 		User getUser = (User) session.getAttribute("user");
 		
 		visit.setWriter(getUser.getName());
-		visit.setDate(translation.currentTime());
+		visit.setDate(Utility.currentTime());
 		
 		vdao.save(visit);
 	}
