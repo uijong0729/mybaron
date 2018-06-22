@@ -38,6 +38,25 @@
 				}
 			}
 		});
+		
+		//코멘트 삭제
+		$('.deleteComment').on('click', function(){
+			var id = $(this).attr('value');
+			var writer = $(this).attr('writer');
+			
+			$.ajax({
+				url: '/deleteComment',
+				type: 'post',
+				data: {commentId: id, writer: writer},
+				success: function(){
+					alert('삭제되었습니다');
+					$('#' + id).remove();
+				},
+				error: function(){
+					alert('본인이 작성한 코멘트만 삭제 할 수 있습니다');
+				}
+			});
+		});
 	
 		//코멘트 등록
     	$('#goWrite').on('click', function(){
@@ -197,16 +216,15 @@
 						</tr>
 					
 					{{#commentList}}
-						<tr>
+						<tr id="{{ commentId }}">
 							<td scope="col" style="color: blue; width: 18%;">
-								<input class="commentId" type="hidden" value="commentId">
 								<span id="writer">{{writer}}</span>
 							</td>
 							<td scope="col" style="width: 75%;">
 								{{context}}
 							</td>
 							<td style="width: 4%;">
-								<button type="button" class="deleteComment close" aria-label="Close">
+								<button type="button" value="{{ commentId }}" writer="{{ writer }}" class="deleteComment close" aria-label="Close">
 								  <span aria-hidden="true">&times;</span>
 								</button>
 							</td>

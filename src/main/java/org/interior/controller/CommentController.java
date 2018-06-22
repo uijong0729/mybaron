@@ -12,9 +12,13 @@ import org.interior.repository.Visitor;
 import org.interior.repository.VisitorRepository;
 import org.interior.util.Utility;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort.Direction;
+import org.springframework.http.HttpEntity;
+import org.springframework.http.HttpMethod;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -42,15 +46,22 @@ public class CommentController {
 	}
 	
 	@ResponseBody
-	@PostMapping("/deleteUserComment")
+	@PostMapping("/deleteComment")
 	public void deleteUserComment(Comment comment, HttpSession session) {
-		
-		User login = (User) session.getAttribute("user");
-		
-		if(login.getName().equals(comment.getWriter())) 
+		User login;
+		try 
 		{
-				cdao.deleteById(comment.getCommentId());
+			login = (User) session.getAttribute("user");
+			if(login.getName().equals(comment.getWriter())) 
+			{
+					cdao.deleteById(comment.getCommentId());
+			}
 		}
+		catch(NullPointerException e)
+		{
+			return;
+		}
+			
 	}
 	
 	@GetMapping("/visitor")
