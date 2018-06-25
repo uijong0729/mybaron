@@ -206,6 +206,18 @@
 				
 				<ul style="list-style: none;">
 					<li id="commentWrite" style="margin: 0; padding: 0;"><button class="btn btn-primary">유저평가 작성</button></li>
+					
+					<!-- 유저가 로그인 해야만 볼 수 있음 -->
+					{{#user}}
+						{{#summoner}}
+						<form action="/user/analysis" method="post">
+							<li role="presentation" style="margin: 0; padding: 0;"><button type="submit" class="btn btn-warning">플레이어 분석</button></li>
+							<input name="name" type="hidden" value="{{name}}">
+							<input name="accountId" type="hidden" value="{{accountId}}">
+							<input name="id" type="hidden" value="{{id}}">
+						</form>
+						{{/summoner}}
+					{{/user}}
 				</ul>
 			</div>
 		  	

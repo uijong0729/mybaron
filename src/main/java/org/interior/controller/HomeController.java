@@ -3,6 +3,7 @@ package org.interior.controller;
 import org.interior.repository.User;
 import org.interior.repository.UserRepository;
 import org.interior.util.Security;
+import org.interior.vo.Summoner;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -45,8 +46,14 @@ public class HomeController {
 		return "user/list";
 	}
 	
-	
-
+	//analysis
+	@PostMapping("/analysis")
+	public String analysis(Model model, Summoner summoner) {
+		
+		System.out.println(summoner);
+		
+		return "user/analysis";
+	}
 
 	
 	
