@@ -208,7 +208,7 @@
 					<li id="commentWrite" style="margin: 0; padding: 0;"><button class="btn btn-primary">유저평가 작성</button></li>
 					
 					<!-- 유저가 로그인 해야만 볼 수 있음 -->
-					{{#user}}
+				<!-- 	{{#user}}
 						{{#summoner}}
 						<form action="/user/analysis" method="post">
 							<li role="presentation" style="margin: 0; padding: 0;"><button type="submit" class="btn btn-warning">플레이어 분석</button></li>
@@ -217,7 +217,7 @@
 							<input name="id" type="hidden" value="{{id}}">
 						</form>
 						{{/summoner}}
-					{{/user}}
+					{{/user}} -->
 				</ul>
 			</div>
 		  	
@@ -287,7 +287,7 @@
   
   
 <div class="container">
-		<hr>
+		<br style="margin: 2%">
 			<div class="row">
 			    <div class="col-xs-6 table-responsive">
 					<table id="table1" style="display: inline-block;" class="table table-hover">
@@ -340,11 +340,13 @@
 	
 	
 	<div class="container">
-		<table class="table" id="gameTable">
+		<div class="table-responsive">
+			<table class="table" id="gameTable">
 				
-		</table>
-		<br>
+			</table>
+			<br>
 		<button class="btn btn-primary btn-block" id="loadPastGame">이전전적 불러오기</button>
+		</div>
 	</div>
 	
 	

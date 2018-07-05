@@ -91,7 +91,7 @@ public class SummonerController {
 		sb.append(cdao.findByIndividualKey(championCode).getFull());
 		sb.append("'>");
 		sb.append("<figcaption style='text-align: center; display: block;'>");
-		sb.append("<a target='_blank' href='userProfile?user=");
+		sb.append("<a style='font-size:"+ (size/4) + "%; target='_blank' href='userProfile?user=");
 		sb.append(caption);
 		sb.append("'>");
 		sb.append(caption);
@@ -307,7 +307,7 @@ public class SummonerController {
 					sb.append("</td>");
 					
 					//참가자들
-					sb.append("<td style='width: 54%;'>");
+					sb.append("<td style='width: 57%;'>");
 					
 					
 					for (int k = 0 ; k < mcAr.size() ; k++) {
@@ -328,7 +328,7 @@ public class SummonerController {
 					}
 					
 					
-					sb.append("<hr style='border: 2px solid gray;'></td><td style='width: 15%; text-align: center;'>");
+					sb.append("<hr style='border: 2px solid gray;'></td><td style='width: 12%; text-align: center;'>");
 					sb.append(Utility.epochCalculator2(ml2.get(i).getTimestamp()));
 					sb.append("</td>");
 					

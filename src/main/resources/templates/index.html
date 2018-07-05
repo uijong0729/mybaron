@@ -73,13 +73,13 @@ http://taycaldwell.com/riot-api-java/doc/
 	
 	
 	{{# user }}	
-	<div class="container" style="border: 1px solid gray;">
+	<div class="container" style="border: 1px solid gray; width: 40%;">
+            <h4 style="text-align: center;">실시간 채팅</h4><hr>
             <form class="form form-inline">
                 <div class="form-group" style="width: 70%;">
-                    <label for="name">실시간 채팅</label>
                     <input type="text" id="content" class="form-control" style="width: 90%;">
                 </div>
-                <button id="send" class="btn btn-default" type="submit">Send</button>
+                <button id="send" class="btn btn-default btn-lg" type="submit">Send</button>
                 <input id="nick" type="hidden" value="{{ name }}">
             </form>
     
