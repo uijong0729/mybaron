@@ -67,7 +67,7 @@ public class SummonerController {
 	public String getChampImg(int size, int championCode) throws RiotApiException{
 		StringBuffer sb = new StringBuffer();
 		
-		sb.append("<img style='margin: 2%; margin-top: 4%;;' width='");
+		sb.append("<img style='margin: 2%; margin-top: 4%;' width='");
 		sb.append(size);
 		sb.append("%' src='http://ddragon.leagueoflegends.com/cdn/");
 		sb.append(version);
@@ -91,7 +91,7 @@ public class SummonerController {
 		sb.append(cdao.findByIndividualKey(championCode).getFull());
 		sb.append("'>");
 		sb.append("<figcaption style='text-align: center; display: block;'>");
-		sb.append("<a style='font-size:"+ (size/4) + "%; target='_blank' href='userProfile?user=");
+		sb.append("<a style='font-size:"+ (size/3) + "%; target='_blank' href='userProfile?user=");
 		sb.append(caption);
 		sb.append("'>");
 		sb.append(caption);
@@ -288,26 +288,26 @@ public class SummonerController {
 				
 				
 					//챔피언 아이콘
-					sb.append("<td style='width: 10%;'>");
+					sb.append("<td class='td0' style='width: 10%;'>");
 					sb.append(getChampImg(80, ml2.get(i).getChampion()));
 					sb.append("</td>");
 					
 					//KDA
-					sb.append("<td style='width: 8%; text-align: center;'>");
+					sb.append("<td class='td1' style='width: 8%; text-align: center;'>");
 					sb.append(Utility.kdaFormMaker(pStat.getKills(), pStat.getDeaths(), pStat.getAssists()));
 					sb.append("<br><span style='padding: 4%; margin: 3%; border-radius: 3px; border: 1px solid gray; background-color: blue; color: white;'>");
 					sb.append(Utility.kdaCal(pStat.getKills(), pStat.getDeaths(), pStat.getAssists()));
 					sb.append("</span></td>");
 					
 					//게임 모드
-					sb.append("<td style='width: 12%; text-align: center;'>");
+					sb.append("<td class='td1' style='width: 12%; text-align: center;'>");
 					sb.append(Utility.gameMode(mcInfo.getGameMode()));
 					sb.append("<br>");
 					sb.append(Utility.isWinToString(isWin));
 					sb.append("</td>");
 					
 					//참가자들
-					sb.append("<td style='width: 57%;'>");
+					sb.append("<td id='par' style='width: 57%;'>");
 					
 					
 					for (int k = 0 ; k < mcAr.size() ; k++) {
@@ -328,9 +328,9 @@ public class SummonerController {
 					}
 					
 					
-					sb.append("<hr style='border: 2px solid gray;'></td><td style='width: 12%; text-align: center;'>");
+					sb.append("<hr style='border: 2px solid gray;'></td><td class='td3' style='width: 12%; text-align: center;'><span>");
 					sb.append(Utility.epochCalculator2(ml2.get(i).getTimestamp()));
-					sb.append("</td>");
+					sb.append("</span></td>");
 					
 				sb.append("</tr>");
 			}

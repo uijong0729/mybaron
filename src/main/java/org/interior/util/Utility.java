@@ -68,11 +68,11 @@ public class Utility {
 		
 		switch (mode) {
 		case "CLASSIC":
-			return "소환사의 협곡";
+			return "<span>소환사의 협곡</span>";
 		case "ARAM":
-			return "칼바람 나락";
+			return "<span>칼바람 나락</span>";
 		default:
-			return mode;
+			return "<span>"+mode+"</span>";
 		}
 	}
 	
@@ -160,11 +160,11 @@ public class Utility {
 		{
 			if(kills != 0 || assists != 0)
 			{
-				return "perfect";
+				return "<span>perfect<span>";
 			}
 			else
 			{
-				return "잉여로웠다";
+				return "<span>잉여로웠다<span>";
 			}
 		}
 		else

@@ -1,0 +1,75 @@
+@charset "EUC-KR";
+
+
+	/*	가장 기본적인 미디어 쿼리	*/
+
+	/* 526 픽셀 이하면 99%로 조정*/
+	@media(max-width:526px){
+	
+		.search{
+			width: 100%!important;
+			margin-top: 5px;
+			margin-left: 0px!important;	
+		}
+
+
+	
+	}
+	
+	@media(max-width:720px){		
+		#reg-form-div{
+			width: 100%!important;
+		}
+	}
+	
+	@media(max-width: 377px)
+	{
+				
+		#commentWrite{
+			display: inline-block;
+		}
+		
+		#commentImg{
+			display: inline-block;
+		}
+	}
+	
+	
+	@media(max-width: 624px)
+	{
+		span{
+			font-size: 25%;
+		}
+		.td0{
+			width: 6%!important;
+		}
+		.td1{
+			width: 8%!important;
+		}
+		.td2{
+			width: 10%!important;
+		}	
+		.td3{
+			width: 12%!important;
+		}			
+		#par{
+			width: 68%!important;
+		}
+		
+	}
+
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
