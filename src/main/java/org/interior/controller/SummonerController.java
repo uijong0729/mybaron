@@ -325,7 +325,7 @@ public class SummonerController {
 				
 				
 					//챔피언 아이콘
-					sb.append("<td class='td0' style='width: 10%;'>");
+					sb.append("<td class='td0' style='width: 10%; border: 1px solid gray;'>");
 					sb.append(getChampImg(75, ml2.get(i).getChampion(), Utility.kdaFormMaker(pStat.getKills(), pStat.getDeaths(), pStat.getAssists()), Utility.kdaCal(pStat.getKills(), pStat.getDeaths(), pStat.getAssists())));
 					sb.append("</td>");
 					
