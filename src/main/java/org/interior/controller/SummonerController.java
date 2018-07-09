@@ -91,13 +91,50 @@ public class SummonerController {
 		sb.append(cdao.findByIndividualKey(championCode).getFull());
 		sb.append("'>");
 		sb.append("<figcaption style='text-align: center; display: block;'>");
-		sb.append("<a style='font-size:"+ (size/3) + "%; target='_blank' href='userProfile?user=");
-		sb.append(caption);
-		sb.append("'>");
-		sb.append(caption);
-		sb.append("</a>");
+		if(caption.length() > 4)
+		{
+			sb.append("<a style='font-size:"+ (size/2) + "%; target='_blank' href='userProfile?user=");
+			sb.append(caption);
+			sb.append("'>");
+			sb.append(caption);
+			sb.append("</a>");
+		}
+		else
+		{
+			sb.append("<a style='font-size:"+ (size) + "%; target='_blank' href='userProfile?user=");
+			sb.append(caption);
+			sb.append("'>");
+			sb.append(caption);
+			sb.append("</a>");
+		}
+	
 		sb.append("</figcaption>");
 		sb.append("</figure>");
+		
+		return sb.toString();
+	}
+	
+	
+	//챔피언 아이콘 + KDA
+	public String getChampImg(int size, int championCode, String kda, String kdacal) throws RiotApiException{
+		StringBuffer sb = new StringBuffer();
+		
+		//sb.append("<figure style='text-align: center; display: inline-block; width: 19%;'>");
+		sb.append("<div style='text-align: center;'><img style='margin: 2%; margin-top: 4%;;' width='");
+		sb.append(size);
+		sb.append("%' src='http://ddragon.leagueoflegends.com/cdn/");
+		sb.append(version);
+		sb.append("/img/champion/");
+		sb.append(cdao.findByIndividualKey(championCode).getFull());
+		sb.append("'></div>");
+		//sb.append("<figcaption style='text-align: center; display: block;'><span>");
+		sb.append("<span class='kda' style='text-align: center; display: block;'>");
+		sb.append(kda);
+		sb.append("</span><br><span class='kda' style='display: block; background-color: blue; color: white; text-align: center;'>");
+		sb.append(kdacal);
+		sb.append("</span>");
+		//sb.append("</figcaption>");
+		//sb.append("</figure>");
 		
 		return sb.toString();
 	}
@@ -289,30 +326,17 @@ public class SummonerController {
 				
 					//챔피언 아이콘
 					sb.append("<td class='td0' style='width: 10%;'>");
-					sb.append(getChampImg(80, ml2.get(i).getChampion()));
+					sb.append(getChampImg(75, ml2.get(i).getChampion(), Utility.kdaFormMaker(pStat.getKills(), pStat.getDeaths(), pStat.getAssists()), Utility.kdaCal(pStat.getKills(), pStat.getDeaths(), pStat.getAssists())));
 					sb.append("</td>");
 					
-					//KDA
-					sb.append("<td class='td1' style='width: 8%; text-align: center;'>");
-					sb.append(Utility.kdaFormMaker(pStat.getKills(), pStat.getDeaths(), pStat.getAssists()));
-					sb.append("<br><span style='padding: 4%; margin: 3%; border-radius: 3px; border: 1px solid gray; background-color: blue; color: white;'>");
-					sb.append(Utility.kdaCal(pStat.getKills(), pStat.getDeaths(), pStat.getAssists()));
-					sb.append("</span></td>");
-					
-					//게임 모드
-					sb.append("<td class='td1' style='width: 12%; text-align: center;'>");
-					sb.append(Utility.gameMode(mcInfo.getGameMode()));
-					sb.append("<br>");
-					sb.append(Utility.isWinToString(isWin));
-					sb.append("</td>");
-					
+
 					//참가자들
-					sb.append("<td id='par' style='width: 57%;'>");
+					sb.append("<td id='par' style='width: 57%;'><div class='team1'>");
 					
 					
 					for (int k = 0 ; k < mcAr.size() ; k++) {
 						
-						if(k != 5)
+						if(k < 5)
 						{
 							//getChampImg(이미지크기, 챔피언ID, 소환사이름)
 							sb.append(getChampImg(40, mcAr.get(k).getChampionId(), mcPlayer.get(k).getPlayer().getSummonerName()));
@@ -320,7 +344,11 @@ public class SummonerController {
 						}
 						else
 						{
-							sb.append("<hr>");
+							if(k ==5)
+							{
+								sb.append("</div><hr><div class='team2'>");
+							}
+						
 							sb.append(getChampImg(40, mcAr.get(k).getChampionId(), mcPlayer.get(k).getPlayer().getSummonerName()));
 							sb.append(" ");
 						}
@@ -328,11 +356,15 @@ public class SummonerController {
 					}
 					
 					
-					sb.append("<hr style='border: 2px solid gray;'></td><td class='td3' style='width: 12%; text-align: center;'><span>");
+					sb.append("</div></td><td class='td3' style='width: 12%; text-align: center;'><span>");
 					sb.append(Utility.epochCalculator2(ml2.get(i).getTimestamp()));
-					sb.append("</span></td>");
-					
-				sb.append("</tr>");
+					sb.append("</span><br><br>");
+					sb.append(Utility.gameMode(mcInfo.getGameMode()));
+					sb.append("<br>");
+					sb.append(Utility.isWinToString(isWin));
+					sb.append("</td></tr><tr><td><br><br></td></tr>");
+
+				
 			}
 			
 			

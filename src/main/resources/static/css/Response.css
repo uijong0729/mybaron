@@ -4,7 +4,7 @@
 	/*	가장 기본적인 미디어 쿼리	*/
 
 	/* 526 픽셀 이하면 99%로 조정*/
-	@media(max-width:526px){
+	@media(max-width:480px){
 	
 		.search{
 			width: 100%!important;
@@ -16,7 +16,7 @@
 	
 	}
 	
-	@media(max-width:720px){		
+	@media(max-width:480px){		
 		#reg-form-div{
 			width: 100%!important;
 		}
@@ -35,27 +35,27 @@
 	}
 	
 	
-	@media(max-width: 624px)
+	@media(max-width: 580px)
 	{
 		span{
-			font-size: 25%;
+			font-size: 50%;
 		}
 		.td0{
 			width: 6%!important;
+			
 		}
-		.td1{
-			width: 8%!important;
-		}
-		.td2{
-			width: 10%!important;
-		}	
 		.td3{
-			width: 12%!important;
-		}			
+			
+		}		
 		#par{
-			width: 68%!important;
+			width: 76%!important;
 		}
-		
+		.kda{
+		font-size: 100%!important;
+		}
+		.containerr{
+			padding: 0px!important;
+		}
 	}
 
 	

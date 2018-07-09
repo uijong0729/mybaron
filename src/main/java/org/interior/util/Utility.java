@@ -39,13 +39,12 @@ public class Utility {
 		OffsetDateTime gameTime = OffsetDateTime.ofInstant(now, ZoneId.systemDefault()); 
 		
 		sb.append(gameTime.getMonth().getValue());
-		sb.append("월 ");
+		sb.append(" / ");
 		sb.append(gameTime.getDayOfMonth());
-		sb.append("일 <br>");
+		sb.append("<br>");
 		sb.append(gameTime.getHour());
-		sb.append("시  ");
+		sb.append(":");
 		sb.append(mm(gameTime.getMinute()));
-		sb.append("분 ");
 		
 		return sb.toString();
 	}
@@ -145,9 +144,9 @@ public class Utility {
 		StringBuffer sb = new StringBuffer();
 		sb.append("<span style='color: blue;'>");
 		sb.append(kills);
-		sb.append("</span>/<span style='color: red;'>");
+		sb.append("</span><span>/</span><span style='color: red;'>");
 		sb.append(deaths);
-		sb.append("</span>/<span style='color: green;'>" );
+		sb.append("</span><span>/</span><span style='color: green;'>" );
 		sb.append(assists);
 		sb.append("</span>");
 		return sb.toString();
@@ -169,7 +168,7 @@ public class Utility {
 		}
 		else
 		{
-			return Math.round( ((double) (kills + assists) / (double) deaths) * 100)/100.0 + "";
+			return "<span>" + Math.round( ((double) (kills + assists) / (double) deaths) * 100)/100.0 + "</span>";
 		}
 		
 	}
