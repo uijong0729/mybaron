@@ -5,7 +5,7 @@ http://baron.hlight.tk/
 -------------
 +	Server Engine : Nginx (CentOS7)
 +	Framework : Spring-boot 2.02
-+	DataBase : H2 DB → MYSQL   (6/12 : db안정성 문제로 MYSQL로 교체)
++	DataBase : MYSQL 
 +	ORM framework : JPA
 +	Template Engine : Mustache
 +	Server Language: Java
